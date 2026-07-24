@@ -1,36 +1,52 @@
 # Freight Document Intelligence
 
-**Ask your shipping documents anything — and catch compliance gaps before
-customs does.**
-
-A RAG-powered agent for freight forwarders, customs brokers and compliance
-teams. It ingests a shipment's full document pack (Bill of Lading,
-commercial invoice, packing list, certificate of origin, ISF, customs
-entry, arrival notice, delivery order), answers natural-language questions
-across it **with mandatory source citations**, reconciles every document
-against the others, and produces an audit-ready compliance report —
-gated behind a human reviewer before anything would ever be filed.
+**An evidence-backed freight-document intelligence engine** for freight
+forwarders, customs brokers and compliance teams: structured extraction,
+cited Q&A, cross-document reconciliation and compliance checks over a
+shipment's document pack — **decision-support only**, with a human review
+gate before anything filing-related, and an API-first design so the same
+engine serves Copilot Studio, ChatGPT actions, Claude, or your internal
+systems.
 
 Built on experience inside the Import VIP desk of one of the world's
 largest container carriers: these are exactly the mismatches that trigger
-customs exams, penalties and demurrage when nobody catches them pre-filing.
+customs exams, penalties and demurrage when nobody catches them
+pre-filing.
 
-## What it does
+## What the engine proves
 
-- **Extracts + indexes** structured fields and full text from each PDF
-  (pdfplumber + ChromaDB; every field keeps its page number and a
-  confidence score)
-- **Answers questions** across the doc set — *"What's the declared value
-  vs invoice total for shipment MSKU-2847?"* — with a `[document p.N]`
-  citation and confidence score on every answer. No citation, no claim.
-- **Reconciles documents against each other**: container numbers, seals,
-  vessels, weights, values, HTS codes, origin, consignee data — 12 checks,
-  each mismatch flagged with a severity level and a dollar-impact estimate
-- **Runs a compliance checklist**: ISF-10 completeness, HTS format +
-  goods-description coherence, country-of-origin consistency → audit-ready
+- **Document ingestion + structured extraction** — 8 document types per
+  shipment (B/L, commercial invoice, packing list, certificate of origin,
+  ISF, customs entry, arrival notice, delivery order); every extracted
+  field keeps its page number and a parse-quality score
+- **Evidence-backed Q&A** — *"What's the declared value vs invoice total
+  for shipment MSKU-2847?"* — every answer carries `[document p.N]`
+  citations that are generated from stored extraction objects and
+  metadata, not written freehand by a model; unsupported questions get an
+  explicit "not found", never a guess
+- **Deterministic cross-document reconciliation** — 12 rule-based checks
+  (values, HTS, origin, parties, containers, seals, vessels, weights,
+  packages) with tolerance bands, severity policy, and an honest impact
+  model (see below)
+- **Compliance checklist** — ISF-10 completeness, HTS format +
+  chapter/description plausibility, origin consistency → audit-ready
   report per shipment
-- **Governance by design**: append-only decision trail (`trace.jsonl`),
-  human-in-the-loop approval gate, synthetic data only
+- **Human review gate + full traceability** — reports are always
+  `PENDING_HUMAN_REVIEW`; only a named reviewer can approve, and every
+  decision (passes included) is appended to `trace.jsonl`
+- **API-first integration readiness** — a REST service with an OpenAPI
+  schema ([docs/openapi.json](docs/openapi.json)) consumable by Copilot
+  Studio, ChatGPT actions, Claude and internal tools
+  ([docs/INTEGRATIONS.md](docs/INTEGRATIONS.md))
+
+The architecture rule throughout: **Python and rules do the parts that
+must be correct; the model helps where the source material is messy.**
+Parsing, normalization, arithmetic validation, reconciliation, severity
+and audit logging are deterministic and run with no API key (`--offline`).
+The LLM layer (Claude by default, OpenAI/Azure via `--provider`) only
+composes cited answers and executive summaries on top of tool results —
+and business logic survives model replacement by construction
+(`tools/providers.py`).
 
 ## Quick start
 
@@ -49,13 +65,16 @@ python freight_doc_agent.py --offline ask "Declared value vs invoice total for M
 # Full audit: reconciliation + compliance, all shipments
 python freight_doc_agent.py --offline audit
 
-# With Claude orchestrating retrieval + writing the executive summary
-export ANTHROPIC_API_KEY=sk-...
-python freight_doc_agent.py ask "Why is CMAU-7913 risky to file as-is?"
+# Live mode — pick your model provider
+export ANTHROPIC_API_KEY=sk-...   # Claude (default)
 python freight_doc_agent.py audit
+python freight_doc_agent.py --provider openai ask "Why is CMAU-7913 risky to file as-is?"
 
 # Record the human sign-off (nothing is 'filed' without it)
 python freight_doc_agent.py approve --shipment MSKU-2847 --reviewer "A. Denis"
+
+# Or run it as a service (OpenAPI at /openapi.json, docs at /docs)
+uvicorn api:app --reload
 ```
 
 ## Example output
@@ -66,24 +85,25 @@ MSKU-2847: declared value = $46,800.00 (per customs entry); invoice total =
 $64,868.40 (per commercial invoice). Difference: $18,068.40 — MISMATCH,
 review before filing.
   sources: [customs_entry p.1 — 06_customs_entry.pdf]; [commercial_invoice p.1 — 02_commercial_invoice.pdf]
-  confidence: 0.99
+  confidence (heuristic): answer 0.99 · extraction 0.99
 
 $ python freight_doc_agent.py --offline audit --shipment MSKU-2847
 ===== SHIPMENT MSKU-2847 — DOCUMENT AUDIT =====
 Reconciliation: 12 checks · 1 mismatch(es)
   ✖ [CRITICAL] entered value differs from commercial invoice total by $18,068.40
-      est. impact: $18,068.40 (misdeclared value + duty delta at entry duty rate)
+      exact delta: $18,068.40 (exact delta between entered value and invoice total)
       sources: commercial_invoice p.1, customs_entry p.1
 Compliance: 1 failed item(s)
   ⚠ [FAIL] ISF-10 element(s) missing: Manufacturer (or supplier)
-Estimated exposure: $23,068.40
+Quantified deltas: $18,068.40   Potential exposure (est.): $5,000.00
 Recommendation: HOLD — resolve findings before filing
 Governance status: PENDING_HUMAN_REVIEW
 ```
 
 **Live demo:** [anthonydenis01.github.io/freight-document-intelligence/demo.html](https://anthonydenis01.github.io/freight-document-intelligence/demo.html)
 — chat-style Q&A with cited answers, the reconciliation matrix, and the
-compliance report view (static data mirroring the agent's real output).
+compliance report view. The demo is static; its numbers mirror real CLI
+outputs (`eval_results.json`, `reports/`).
 
 ## Architecture
 
@@ -91,7 +111,7 @@ compliance report view (static data mirroring the agent's real output).
 data/shipments/<ID>/*.pdf   (8 docs per shipment, synthetic)
         │
         ▼
-tools/pdf_extract.py   → typed fields + page + confidence per field
+tools/pdf_extract.py   → typed fields + page + parse confidence
         │
         ├──────────────────────────────┐
         ▼                              ▼
@@ -99,53 +119,88 @@ tools/indexer.py                tools/reconcile.py   → 12 cross-doc checks
   ChromaDB, 1 chunk/page        tools/compliance.py  → ISF / HTS / origin
   local embeddings                     │
         ▼                              ▼
-tools/rag.py           → cited  tools/reporting.py   → audit report + $ exposure
+tools/rag.py           → cited  tools/reporting.py   → audit report, exposure split
   answers (Q&A)                        │
         └──────────────┬───────────────┘
                        ▼
-        freight_doc_agent.py   → CLI + Claude tool-use loop
+        api.py                 → REST service + OpenAPI (integration surface)
+        freight_doc_agent.py   → CLI
+        tools/providers.py     → Claude / OpenAI / Azure abstraction (live mode only)
         tools/governance.py    → trace.jsonl + human approval gate
 ```
 
-The deterministic core (extraction, reconciliation, compliance) is
-deliberately separated from the LLM layer. It runs with `--offline` and no
-API key, and is fully unit-tested. Claude sits on top for retrieval-
-augmented Q&A and executive summaries — it reasons *about* the findings,
-it never replaces the rules that produce them.
+### Reconciliation checks & the impact model
 
-### Reconciliation checks & impact model
+Only three kinds of dollar figure are stated as numbers, and each finding
+is labeled with its kind:
 
-| Check | Compared across | Severity | $ impact basis |
+- **exact delta** — recomputable from the documents themselves (invoice
+  arithmetic, entered-value vs invoice-total)
+- **duty-rate delta** — rate difference × entered value, with the rate
+  basis shown (demo rate table — verify against current HTSUS)
+- **potential exposure** — rough flat estimates requiring broker review;
+  reported separately and **never summed with exact deltas**
+
+| Check | Compared across | Severity | Impact kind |
 |---|---|---|---|
-| Entered value vs invoice total | invoice ↔ entry | CRITICAL | value delta + duty-rate delta |
-| HTS consistency | invoice ↔ ISF ↔ entry | CRITICAL | duty-rate difference × entered value |
-| Country of origin | invoice ↔ certificate ↔ ISF ↔ entry | CRITICAL | exam + origin verification ($4,500 flat) |
-| Consignee / importer of record | B/L ↔ entry ↔ ISF | HIGH | entry amendment + delay ($1,800 flat) |
-| Container number | B/L ↔ packing list ↔ arrival notice ↔ D/O | HIGH | misrelease / detention ($1,250 flat) |
-| B/L number | 5 documents | HIGH | ($1,250 flat) |
-| Invoice math (lines vs total) | invoice internal | MEDIUM | arithmetic difference |
-| Gross weight (±2% tolerance) | B/L ↔ packing list ↔ arrival notice | MEDIUM | reweigh ($850 flat) |
-| Net vs gross weight | packing list internal | MEDIUM | ($850 flat) |
-| Package count | 5 documents | MEDIUM | tally / shortage ($950 flat) |
-| Seal number | B/L ↔ arrival notice | LOW | seal verification ($350 flat) |
-| Vessel name | B/L ↔ entry ↔ arrival notice | LOW | doc correction ($150 flat) |
+| Entered value vs invoice total | invoice ↔ entry | CRITICAL | exact delta (+ duty note) |
+| HTS consistency | invoice ↔ ISF ↔ entry | CRITICAL | duty-rate delta |
+| Country of origin | invoice ↔ certificate ↔ ISF ↔ entry | CRITICAL | potential exposure ($4,500) |
+| Consignee / importer of record | B/L ↔ entry ↔ ISF | HIGH | potential exposure ($1,800) |
+| Container number | B/L ↔ packing list ↔ arrival ↔ D/O | HIGH | potential exposure ($1,250) |
+| B/L number | 5 documents | HIGH | potential exposure ($1,250) |
+| Invoice math (lines vs total) | invoice internal | MEDIUM | exact delta |
+| Gross weight (±2% tolerance) | B/L ↔ packing list ↔ arrival | MEDIUM | potential exposure ($850) |
+| Net vs gross weight | packing list internal | MEDIUM | potential exposure ($850) |
+| Package count | 5 documents | MEDIUM | potential exposure ($950) |
+| Seal number | B/L ↔ arrival notice | LOW | potential exposure ($350) |
+| Vessel name | B/L ↔ entry ↔ arrival | LOW | potential exposure ($150) |
 
-Compliance adds: **ISF-10 completeness** (missing element → up to $5,000
-liquidated damages), **HTS format + chapter/description coherence**, and
-**origin consistency**. Flat estimates are deliberately conservative
-placeholders — swap in your own tariff/penalty tables in
-`tools/reconcile.py`.
+Compliance adds **ISF-10 completeness** (missing element → potential
+exposure wording referencing CBP's up-to-$5,000 liquidated damages, not a
+guaranteed amount), **HTS format + chapter/description plausibility**
+(a screen, not a classification engine), and **origin consistency**.
 
-## Evaluation (measured, not aspirational)
+## Evaluation (measured, definitions disclosed)
 
-`python eval.py` scores the agent against the generator's ground truth:
+`python eval.py` scores the engine against the generator's ground truth
+and prints the formulas it uses (P = TP/(TP+FP), R = TP/(TP+FN)):
 
 ```
-1. Field extraction accuracy : 100.0%  (870/870 fields)   [target ≥ 95%]  PASS
-2. Injected discrepancies    : 12/12 caught (100%)        [target 100%]   PASS
-3. RAG answers with citation : 10/10                      [target 100%]   PASS
-4. One-pack end-to-end       : 0.24s                      [target < 60s]  PASS
+1. Field extraction (micro, 870 labeled fields, 10 shipments x 8 docs)
+   precision 1.000 · recall 1.000 · F1 1.000   [TP 870 / FP 0 / FN 0]
+   per family: identifiers 1.000 · parties 1.000 · values 1.000 ·
+               classification 1.000 · quantities 1.000 · routing 1.000
+2. Discrepancy detection (12 injected, 12 check types)
+   precision 1.000 · recall 1.000 · F1 1.000   [TP 12 / FP 0 / FN 0]
+   (documented cascades listed separately, not hidden)
+3. Citation coverage 10/10 · citation correctness 10/10
+   (a citation counts only if the cited page's stored text contains the
+   source value — checked programmatically, not by the model)
+4. Latency: mean 1 ms · p95 8 ms per question (offline); one full pack
+   end-to-end in 0.27 s  [target < 60 s]
 ```
+
+### Honest limitations
+
+- **Synthetic, machine-generated PDFs only.** The corpus is 10 shipments
+  produced by this repo's own generator; layouts are clean and text is
+  extractable. Perfect scores reflect that controlled setting — they are
+  an upper bound, not a field-performance claim.
+- **No OCR.** Scanned or photographed documents are out of scope for v1.0
+  (pdfplumber reads embedded text layers; text-free PDFs are also not
+  citable).
+- **No hidden test split yet**, and no adversarial cases (broken tables,
+  duplicate docs, multi-currency, lb-vs-kg) — planned for v1.1.
+- **Confidence scores are heuristic** (parse quality, retrieval
+  similarity) — decomposed by subsystem, but not calibrated
+  probabilities of truth.
+- **Impact figures**: only exact/duty deltas are firm; flat estimates are
+  labeled potential exposure and need broker review. The duty-rate table
+  is a demo fixture, not a live HTSUS lookup.
+- **Not a compliance authority.** The engine flags possible gaps,
+  preserves evidence, and routes exceptions to a named human reviewer. It
+  never files, and it makes no legal-sufficiency judgments.
 
 ## Data schema
 
@@ -167,53 +222,55 @@ Document types: `bill_of_lading`, `commercial_invoice`, `packing_list`,
 
 ## AI Governance
 
-This agent is built for a domain where a wrong filing has legal
-consequences, so governance is a feature, not an afterthought:
+Built for a domain where a wrong filing has legal consequences:
 
 - **Synthetic data only.** Every company, vessel, container and value is
   invented by the generator. No real customer or employer data anywhere.
-- **Human-in-the-loop by construction.** The pipeline can only produce
-  reports in `PENDING_HUMAN_REVIEW`. The single path to `APPROVED_BY_HUMAN`
-  is an explicit `approve` command with a named reviewer — recorded in the
-  audit trail. The agent never files anything.
-- **Full traceability.** Every decision — each extraction, each
-  reconciliation rule (passes included), each compliance check, each
-  answer — is appended to `trace.jsonl` with a run ID.
-- **Citations everywhere.** Answers must cite document + page or state
-  "not found in the document pack". The live-mode system prompt rejects
-  and retries uncited answers.
-- **Local by default.** Embeddings are computed locally (no model
-  downloads, no third-party calls at index/retrieval time). The only
-  external call is the optional Claude API in live mode.
+- **Human-in-the-loop by construction.** Reports can only be produced in
+  `PENDING_HUMAN_REVIEW`; the single path to `APPROVED_BY_HUMAN` is an
+  explicit approval with a named reviewer, recorded in the audit trail.
+  The engine never files anything and never asserts filing sufficiency.
+- **Full traceability.** Every decision — each extraction, each rule
+  (passes included), each answer, each approval — is appended to
+  `trace.jsonl` with a run ID.
+- **Citations from evidence, not prose.** Offline-mode citations are
+  emitted from stored extraction objects and index metadata; live-mode
+  answers are built from tool results with a citation contract enforced by
+  retry, and eval verifies cited pages actually contain the source values.
+- **Local by default.** Embeddings are computed locally (zero model
+  downloads); the only external call is the optional model provider in
+  live mode.
 
 ## Running the tests
-
-26 pytest tests cover extraction accuracy vs ground truth, every
-reconciliation rule (including the clean-pack controls and the weight
-tolerance boundary), ISF/HTS/origin compliance, citation guarantees, and
-the approval gate.
 
 ```bash
 pip install pytest   # dev-only dependency
 python -m pytest tests/ -v
 ```
 
+The suite covers extraction vs ground truth, every reconciliation rule
+(clean-pack controls and tolerance boundaries included), ISF/HTS/origin
+compliance, citation guarantees, the impact-kind policy, the provider
+abstraction (mocked), the REST API, and the approval gate.
+
 ## Tech
 
-Python 3.11+, [Anthropic Claude API](https://docs.claude.com) (tool use)
-for RAG orchestration + audit narrative, [ChromaDB](https://www.trychroma.com)
-with local hashed n-gram embeddings (swap-in point for any embedding
-model in `tools/embeddings.py`), [pdfplumber](https://github.com/jsvine/pdfplumber)
-for PDF parsing, [ReportLab](https://www.reportlab.com) for the synthetic
-document generator.
+Python 3.11+ · [FastAPI](https://fastapi.tiangolo.com) + OpenAPI ·
+[Anthropic Claude API](https://docs.claude.com) (default provider, tool
+use) with OpenAI / Azure OpenAI adapters (Chat Completions — no deprecated
+Assistants API) · [ChromaDB](https://www.trychroma.com) with local hashed
+n-gram embeddings (swap-in point for any embedding model in
+`tools/embeddings.py`) · [pdfplumber](https://github.com/jsvine/pdfplumber)
+· [ReportLab](https://www.reportlab.com) (synthetic data generator).
 
-## Possible extensions
+## Roadmap (v1.1)
 
-- OCR ingestion for scanned/photographed documents (Claude vision)
-- Real HTS duty-rate lookups (USITC HTS REST API) instead of the hint table
-- Watch-folder mode: audit each pack as documents arrive from email/EDI
-- Neural embeddings (one-line swap) for fuzzier semantic retrieval
-- FastAPI endpoint + webhook delivery of audit reports
+- Hybrid retrieval (exact-term + vector fusion) and optional reranking
+- Expanded dataset with a hidden test split and adversarial cases
+  (scans → OCR, duplicate/contradictory docs, multi-currency, unit
+  conversions, no-answer questions, prompt-injection text inside a doc)
+- Answer-faithfulness evaluation on the live path
+- Optional MCP adapter over the REST API
 
 ---
 

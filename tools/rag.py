@@ -56,17 +56,42 @@ FIELD_SYNONYMS: dict[str, tuple[str, list[str]]] = {
 
 @dataclass
 class Answer:
+    """A cited answer with confidence decomposed by subsystem.
+
+    Confidence is heuristic, not a probability of truth:
+    - extraction: min per-field parse confidence of the fields used
+    - retrieval: top passage similarity (when retrieval was involved)
+    - answer: overall heuristic = min of the available components
+    Each component is None when that subsystem wasn't involved.
+    """
     question: str
     text: str
     citations: list[dict] = field(default_factory=list)
-    confidence: float = 0.0
+    extraction_confidence: float | None = None
+    retrieval_confidence: float | None = None
+    answer_confidence: float = 0.0
     mode: str = "offline"
+
+    @property
+    def confidence(self) -> float:  # backward-compatible overall score
+        return self.answer_confidence
+
+    def confidences(self) -> dict:
+        return {"extraction": self.extraction_confidence,
+                "retrieval": self.retrieval_confidence,
+                "answer": self.answer_confidence}
 
     def render(self) -> str:
         cites = "; ".join(
             f"[{c['doc_type']} p.{c['page']} — {Path(c['file']).name}]" for c in self.citations
         ) or "[no source — answer withheld]"
-        return f"{self.text}\n  sources: {cites}\n  confidence: {self.confidence:.2f}"
+        parts = [f"answer {self.answer_confidence:.2f}"]
+        if self.extraction_confidence is not None:
+            parts.append(f"extraction {self.extraction_confidence:.2f}")
+        if self.retrieval_confidence is not None:
+            parts.append(f"retrieval {self.retrieval_confidence:.2f}")
+        return (f"{self.text}\n  sources: {cites}\n"
+                f"  confidence (heuristic): {' · '.join(parts)}")
 
 
 def _fmt(field_name: str, value) -> str:
@@ -118,10 +143,12 @@ def answer_offline(question: str, col, packs: dict[str, dict[str, ExtractedDoc]]
                 delta = round(float(it) - float(dv), 2)
                 text += (f" Difference: ${delta:,.2f}"
                          + (" — MISMATCH, review before filing." if abs(delta) > 1 else " (values agree)."))
-            ans = Answer(question, text, cites, round(min(confs), 2), "offline")
+            ec = round(min(confs), 2)
+            ans = Answer(question, text, cites, extraction_confidence=ec,
+                         answer_confidence=ec, mode="offline")
             if trace:
                 trace.log("rag.answer", mode="offline-structured", question=question,
-                          shipment=sid, citations=len(cites), confidence=ans.confidence)
+                          shipment=sid, citations=len(cites), **ans.confidences())
             return ans
 
     # 2) retrieval answer
@@ -129,7 +156,7 @@ def answer_offline(question: str, col, packs: dict[str, dict[str, ExtractedDoc]]
     hits = [h for h in hits if h["similarity"] > 0.05]
     if not hits:
         ans = Answer(question, "Not found in the document pack — no relevant passage retrieved.",
-                     [], 0.0, "offline")
+                     [], answer_confidence=0.0, mode="offline")
     else:
         best = hits[0]
         snippet_lines = [ln for ln in best["text"].splitlines()[1:] if ln.strip()][:6]
@@ -140,13 +167,14 @@ def answer_offline(question: str, col, packs: dict[str, dict[str, ExtractedDoc]]
         text = ("Most relevant passage "
                 f"({best['meta']['shipment_id']}, {best['meta']['doc_type'].replace('_', ' ')}):\n  "
                 + "\n  ".join(snippet_lines) + others)
+        rc = hits[0]["similarity"]
         ans = Answer(question, text,
                      [{"doc_type": h["meta"]["doc_type"], "file": h["meta"]["file"],
                        "page": h["meta"]["page"]} for h in hits[:3]],
-                     hits[0]["similarity"], "offline")
+                     retrieval_confidence=rc, answer_confidence=rc, mode="offline")
     if trace:
         trace.log("rag.answer", mode="offline-retrieval", question=question,
-                  citations=len(ans.citations), confidence=ans.confidence)
+                  citations=len(ans.citations), **ans.confidences())
     return ans
 
 
@@ -194,17 +222,23 @@ RAG_TOOLS = [
 
 
 def answer_live(question: str, col, packs: dict[str, dict[str, ExtractedDoc]],
-                model: str, trace=None, max_turns: int = 6) -> Answer:
-    import json as _json
+                provider, trace=None, max_turns: int = 6) -> Answer:
+    """Provider-agnostic live Q&A (Claude / OpenAI / Azure via tools/providers.py).
 
-    import anthropic
+    The provider only composes the answer; retrieval and field access run
+    through the same deterministic tools as offline mode, and the citation
+    contract is enforced with a retry.
+    """
+    from tools.providers import run_tool_loop
 
-    client = anthropic.Anthropic()
-    messages = [{"role": "user", "content": question}]
     citations: list[dict] = []
+    retrieval_top: list[float] = []
+    extraction_confs: list[float] = []
 
     def tool_search(query: str, shipment_id: str | None = None):
         hits = indexer.search(col, query, top_k=5, shipment_id=shipment_id)
+        if hits:
+            retrieval_top.append(hits[0]["similarity"])
         for h in hits[:3]:
             citations.append({"doc_type": h["meta"]["doc_type"], "file": h["meta"]["file"],
                               "page": h["meta"]["page"]})
@@ -216,40 +250,31 @@ def answer_live(question: str, col, packs: dict[str, dict[str, ExtractedDoc]],
 
     def tool_fields(shipment_id: str):
         pack = packs.get(shipment_id.upper(), {})
+        for doc in pack.values():
+            extraction_confs.extend(f.confidence for f in doc.fields.values())
         if trace:
             trace.log("rag.tool", tool="get_shipment_fields", shipment=shipment_id, found=bool(pack))
         return {dt: {n: {"value": f.value, "page": f.page, "confidence": f.confidence}
                      for n, f in doc.fields.items()} for dt, doc in pack.items()}
 
-    final_text = "Not found in the document pack."
-    for _ in range(max_turns):
-        resp = client.messages.create(model=model, max_tokens=700,
-                                      system=RAG_SYSTEM_PROMPT, tools=RAG_TOOLS, messages=messages)
-        messages.append({"role": "assistant", "content": resp.content})
-        calls = [b for b in resp.content if b.type == "tool_use"]
-        if not calls:
-            final_text = "".join(b.text for b in resp.content if b.type == "text")
-            if "[" not in final_text and "Not found" not in final_text:
-                # citation contract violated — one retry demanding citations
-                messages.append({"role": "user",
-                                 "content": "Your answer lacked [doc_type p.N] citations. "
-                                            "Re-answer with a citation on every claim."})
-                continue
-            break
-        results = []
-        for call in calls:
-            if call.name == "search_documents":
-                out = tool_search(**call.input)
-            else:
-                out = tool_fields(**call.input)
-            results.append({"type": "tool_result", "tool_use_id": call.id,
-                            "content": _json.dumps(out, default=str)})
-        messages.append({"role": "user", "content": results})
+    final_text = run_tool_loop(
+        provider, RAG_SYSTEM_PROMPT, question, RAG_TOOLS,
+        {"search_documents": tool_search, "get_shipment_fields": tool_fields},
+        max_turns=max_turns, max_tokens=700,
+        require_marker="[",
+        retry_prompt="Your answer lacked [doc_type p.N] citations. "
+                     "Re-answer with a citation on every claim.",
+    ) or "Not found in the document pack."
 
     conf_m = re.search(r"confidence:\s*([01]\.\d+)", final_text)
-    conf = float(conf_m.group(1)) if conf_m else (0.8 if citations else 0.0)
-    ans = Answer(question, final_text, citations[:4], conf, "live")
+    model_conf = float(conf_m.group(1)) if conf_m else (0.8 if citations else 0.0)
+    rc = max(retrieval_top) if retrieval_top else None
+    ec = round(min(extraction_confs), 2) if extraction_confs else None
+    overall = min([v for v in (model_conf, rc, ec) if v is not None] or [0.0])
+    ans = Answer(question, final_text, citations[:4],
+                 extraction_confidence=ec, retrieval_confidence=rc,
+                 answer_confidence=round(overall, 2), mode=f"live/{provider.name}")
     if trace:
-        trace.log("rag.answer", mode="live", question=question,
-                  citations=len(ans.citations), confidence=conf)
+        trace.log("rag.answer", mode=ans.mode, question=question,
+                  citations=len(ans.citations), **ans.confidences())
     return ans

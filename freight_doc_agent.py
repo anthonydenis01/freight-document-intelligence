@@ -36,10 +36,10 @@ from tools import indexer, rag
 from tools.compliance import run_compliance
 from tools.governance import ReviewGate, TraceLog
 from tools.pdf_extract import extract_pack
+from tools.providers import ProviderError, complete, get_provider
 from tools.reconcile import reconcile_pack
 from tools.reporting import build_report, print_report
 
-MODEL = "claude-sonnet-4-6"
 DATA_DIR = Path("data/shipments")
 REPORT_DIR = Path("reports")
 
@@ -91,8 +91,8 @@ def cmd_ask(args, trace: TraceLog) -> None:
     if args.offline:
         ans = rag.answer_offline(args.question, col, packs, trace=trace)
     else:
-        _require_api()
-        ans = rag.answer_live(args.question, col, packs, model=MODEL, trace=trace)
+        provider = _get_provider_or_exit(args)
+        ans = rag.answer_live(args.question, col, packs, provider=provider, trace=trace)
     print(ans.render())
     print(f"  latency: {time.time() - t0:.2f}s ({ans.mode} mode)")
 
@@ -124,8 +124,8 @@ def cmd_audit(args, trace: TraceLog) -> None:
         for report in reports:
             print_report(report)
     else:
-        _require_api()
-        _audit_summary_agent(reports, trace)
+        provider = _get_provider_or_exit(args)
+        _audit_summary_agent(reports, trace, provider)
 
     print(f"\n{'=' * 50}")
     print(f"Audited {len(reports)} shipment pack(s) in {elapsed:.1f}s — "
@@ -166,30 +166,22 @@ citations (doc_type p.N). Do not invent anything not present in the JSON.
 """
 
 
-def _require_api() -> None:
+def _get_provider_or_exit(args):
     try:
-        import anthropic  # noqa: F401
-    except ImportError:
-        print("The 'anthropic' package is required for live mode: pip install anthropic")
-        print("Or run with --offline for the deterministic pipeline.")
-        sys.exit(1)
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print("ANTHROPIC_API_KEY is not set. Export it, or run with --offline.")
+        return get_provider(getattr(args, "provider", None), getattr(args, "model", None))
+    except ProviderError as e:
+        print(f"Provider error: {e}")
+        print("Run with --offline for the deterministic pipeline (no API key needed).")
         sys.exit(1)
 
 
-def _audit_summary_agent(reports: list[dict], trace: TraceLog) -> None:
-    import anthropic
-
-    client = anthropic.Anthropic()
-    trace.log("agent.summary_request", shipments=[r["shipment_id"] for r in reports])
-    resp = client.messages.create(
-        model=MODEL, max_tokens=900, system=AUDIT_SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": json.dumps(reports, default=str)}],
-    )
-    text = "".join(b.text for b in resp.content if b.type == "text")
-    trace.log("agent.summary_written", characters=len(text))
-    print("\n----- EXECUTIVE SUMMARY (Claude) -----")
+def _audit_summary_agent(reports: list[dict], trace: TraceLog, provider) -> None:
+    trace.log("agent.summary_request", provider=provider.name,
+              shipments=[r["shipment_id"] for r in reports])
+    text = complete(provider, AUDIT_SYSTEM_PROMPT, json.dumps(reports, default=str),
+                    max_tokens=900)
+    trace.log("agent.summary_written", provider=provider.name, characters=len(text))
+    print(f"\n----- EXECUTIVE SUMMARY ({provider.name}) -----")
     print(text)
 
 
@@ -201,7 +193,10 @@ def main() -> None:
     ap.add_argument("--data", default=str(DATA_DIR), help="Directory of shipment packs")
     ap.add_argument("--chroma", default=".chroma", help="ChromaDB persist directory")
     ap.add_argument("--offline", action="store_true",
-                    help="Deterministic pipeline only — no Claude API call.")
+                    help="Deterministic pipeline only — no model API call.")
+    ap.add_argument("--provider", choices=["anthropic", "openai", "azure"],
+                    help="Model provider for live mode (default: env FDI_PROVIDER or anthropic)")
+    ap.add_argument("--model", help="Model name override (default: provider default / FDI_MODEL)")
     sub = ap.add_subparsers(dest="command", required=True)
 
     sub.add_parser("ingest", help="Extract + index every document pack")

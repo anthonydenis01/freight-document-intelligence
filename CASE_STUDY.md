@@ -28,22 +28,30 @@ graded by severity and priced with a dollar-impact estimate. Third, it
 runs a compliance checklist — ISF completeness, tariff-code plausibility,
 origin consistency — and assembles an audit-ready report.
 
-Crucially, the agent never files anything. Every report ends in "pending
-human review," every decision it makes is written to an append-only audit
-trail, and only a named human reviewer can approve a shipment. It runs on
-fully synthetic data and works offline; nothing sensitive leaves the
-machine.
+Crucially, the engine never files anything and never claims legal
+sufficiency — it is decision support. Every report ends in "pending human
+review," every decision it makes is written to an append-only audit trail,
+and only a named human reviewer can approve a shipment. Dollar figures are
+kept honest: exact arithmetic gaps are stated as numbers; everything else
+is labeled a potential exposure requiring broker judgment. It runs on
+fully synthetic data, works offline, and plugs into whatever your team
+already uses — Microsoft Copilot, ChatGPT, Claude or internal tools —
+through a standard API.
 
-**The outcome.** On a test set of ten shipments — eighty documents, with
-twelve discrepancies deliberately planted by an independent generator —
-the agent extracted 870 of 870 fields correctly (100%, against a 95%
-target) and caught all twelve planted discrepancies, including the
-headline case: a draft customs entry declaring $46,800 against a
-commercial invoice totaling $64,868 — an $18,068 undervaluation flagged as
-critical, with both source documents cited, before anything reached
-customs. Every answer it gave carried a source citation, and a full
-one-shipment audit ran in under a second on a laptop — against a
-one-minute target.
+**The outcome.** On a controlled test set of ten shipments — eighty
+machine-generated documents with twelve discrepancies deliberately planted
+by an independent generator — the engine scored a perfect 1.000 precision
+and recall on both field extraction (870 of 870 labeled fields, zero
+false extractions) and discrepancy detection (all twelve planted mismatches
+caught, zero false alarms — a system that cries wolf is as useless as one
+that misses). That included the headline case: a draft customs entry
+declaring $46,800 against a commercial invoice totaling $64,868 — an
+$18,068 undervaluation flagged as critical, with both source documents
+cited, before anything reached customs. Every answer carried a citation,
+and every citation was verified against the stored page it pointed to. A
+full one-shipment audit ran in under a second on a laptop. These are
+results on clean synthetic documents — an upper bound that proves the
+mechanism, stated with that caveat on purpose.
 
 **Why it matters.** An $18k undervaluation caught after filing is a prior
 disclosure, a penalty calculation and a difficult client call. Caught

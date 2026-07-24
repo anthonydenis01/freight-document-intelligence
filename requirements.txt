@@ -2,3 +2,8 @@ anthropic>=0.40
 chromadb>=1.0
 pdfplumber>=0.11
 reportlab>=4.0
+fastapi>=0.110
+uvicorn>=0.29
+python-multipart>=0.0.9
+# optional live-mode providers:
+#   openai>=1.40        (--provider openai / azure)

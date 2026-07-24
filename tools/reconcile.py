@@ -28,7 +28,13 @@ HTS_DUTY_HINTS = {
     "8541.43.0010": 0.000, "6104.62.2011": 0.149,
 }
 
-# flat exposure estimates for non-valuation mismatches (documented in README)
+# Impact kinds — only arithmetic/valuation deltas carry a firm dollar figure;
+# everything else is a potential-exposure estimate requiring broker review.
+EXACT_DELTA = "exact_delta"            # recomputable from the documents themselves
+DUTY_DELTA = "duty_delta"              # rate difference x entered value (rate basis shown)
+POTENTIAL = "potential_exposure"       # rough estimate — broker review required
+
+# flat potential-exposure estimates for non-valuation mismatches (README table)
 FLAT_IMPACT = {
     "container_number_consistency": 1250.0,   # misrelease / detention risk
     "seal_number_consistency": 350.0,          # seal verification at terminal
@@ -53,6 +59,7 @@ class Finding:
     citations: list[dict]          # [{doc_type, file, page}, ...]
     dollar_impact: float
     impact_basis: str
+    impact_kind: str = POTENTIAL   # exact_delta | duty_delta | potential_exposure
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -80,17 +87,19 @@ class Reconciler:
     def _docs_with(self, field: str, doc_types: list[str]) -> list[ExtractedDoc]:
         return [self.pack[d] for d in doc_types if d in self.pack and field in self.pack[d].fields]
 
-    def _flag(self, check, severity, field, detail, docs_fields, impact, basis):
+    def _flag(self, check, severity, field, detail, docs_fields, impact, basis,
+              kind: str = POTENTIAL):
         finding = Finding(
             check=check, shipment_id=self.sid, severity=severity, field=field, detail=detail,
             values={_label(d, fl): d.value(fl) for d, fl in docs_fields},
             citations=[_cite(d, fl) for d, fl in docs_fields],
-            dollar_impact=round(impact, 2), impact_basis=basis,
+            dollar_impact=round(impact, 2), impact_basis=basis, impact_kind=kind,
         )
         self.findings.append(finding)
         if self.trace:
             self.trace.log("reconcile.flag", shipment=self.sid, check=check,
-                           severity=severity, detail=detail, dollar_impact=finding.dollar_impact)
+                           severity=severity, detail=detail,
+                           dollar_impact=finding.dollar_impact, impact_kind=kind)
 
     def _consistency(self, check, field, doc_types, severity, impact_key,
                      normalize=lambda v: v, tolerance: float | None = None):
@@ -116,7 +125,7 @@ class Reconciler:
             self._flag(check, severity, field,
                        f"{field.replace('_', ' ')} differs across documents",
                        pairs, FLAT_IMPACT.get(impact_key, 500.0),
-                       "flat exposure estimate (see README impact table)")
+                       "potential exposure — rough estimate, broker review required (README impact table)")
         elif self.trace:
             self.trace.log("reconcile.pass", shipment=self.sid, check=check,
                            docs=[d.doc_type for d in docs])
@@ -172,11 +181,13 @@ class Reconciler:
         delta = round(total - declared, 2)
         if abs(delta) > 1.00:
             duty_rate = float(entry.value("duty_rate", 0.0) or 0.0)
-            impact = abs(delta) + abs(delta) * duty_rate
+            duty_note = (f"; duty at entry rate {duty_rate:.1%}: ${abs(delta) * duty_rate:,.2f}"
+                         if duty_rate else "")
             self._flag("declared_value_vs_invoice_total", "CRITICAL", "declared_value",
                        f"entered value differs from commercial invoice total by ${delta:,.2f}",
                        [(inv, "invoice_total"), (entry, "declared_value")],
-                       impact, "misdeclared value + duty delta at entry duty rate")
+                       abs(delta), f"exact delta between entered value and invoice total{duty_note}",
+                       kind=EXACT_DELTA)
         elif self.trace:
             self.trace.log("reconcile.pass", shipment=self.sid, check="declared_value_vs_invoice_total")
 
@@ -190,7 +201,8 @@ class Reconciler:
         if abs(delta) > 0.01:
             self._flag("invoice_math", "MEDIUM", "invoice_total",
                        f"stated invoice total differs from sum of line items by ${delta:,.2f}",
-                       [(inv, "invoice_total")], abs(delta), "arithmetic difference")
+                       [(inv, "invoice_total")], abs(delta),
+                       "exact delta: stated total vs recomputed line-item sum", kind=EXACT_DELTA)
         elif self.trace:
             self.trace.log("reconcile.pass", shipment=self.sid, check="invoice_math")
 
@@ -205,12 +217,15 @@ class Reconciler:
             rates = [HTS_DUTY_HINTS.get(c) for c in codes if HTS_DUTY_HINTS.get(c) is not None]
             if len(rates) >= 2 and declared:
                 impact = abs(max(rates) - min(rates)) * declared
-                basis = "duty-rate delta between the two classifications x entered value"
+                basis = (f"duty-rate delta ({min(rates):.1%} vs {max(rates):.1%}, demo rate table) "
+                         f"x entered value ${declared:,.2f} — verify against current HTSUS")
+                kind = DUTY_DELTA
             else:
-                impact, basis = 2500.0, "reclassification + potential penalty exposure (flat)"
+                impact, basis, kind = 2500.0, \
+                    "reclassification + potential penalty exposure (rough estimate)", POTENTIAL
             self._flag("hts_consistency", "CRITICAL", "hts_code",
                        "HTS classification differs across documents",
-                       [(d, "hts_code") for d in docs], impact, basis)
+                       [(d, "hts_code") for d in docs], impact, basis, kind=kind)
         elif self.trace:
             self.trace.log("reconcile.pass", shipment=self.sid, check="hts_consistency")
 

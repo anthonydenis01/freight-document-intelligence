@@ -146,16 +146,17 @@ footer a:hover{text-decoration:underline}
   </div>
   <div class="head-right">
     <span class="gov-badge"><span class="dot"></span>HUMAN-IN-THE-LOOP GATE ON</span>
+    <span class="gov-badge" style="color:var(--cyan);border-color:rgba(111,183,232,.35)"><span class="dot" style="background:var(--cyan)"></span>API-FIRST · OPENAPI</span>
     <span class="datebadge">RUN 2026-07-24 · 10 PACKS · 80 DOCS</span>
   </div>
 </header>
 
 <div class="stats">
   <div class="stat"><div class="lbl">Shipment packs</div><div class="val">10</div><div class="sub">8 documents each</div></div>
-  <div class="stat"><div class="lbl">Extraction accuracy</div><div class="val green">100%</div><div class="sub">870/870 fields vs ground truth</div></div>
-  <div class="stat"><div class="lbl">Discrepancies caught</div><div class="val red">12/12</div><div class="sub">100% of injected mismatches</div></div>
-  <div class="stat"><div class="lbl">Est. exposure flagged</div><div class="val orange">$42.6k</div><div class="sub">across 6 held shipments</div></div>
-  <div class="stat"><div class="lbl">Answers cited</div><div class="val cyan">100%</div><div class="sub">document + page, every answer</div></div>
+  <div class="stat"><div class="lbl">Extraction F1</div><div class="val green">1.000</div><div class="sub">870 fields · P 1.000 · R 1.000 · 0 FP</div></div>
+  <div class="stat"><div class="lbl">Discrepancy F1</div><div class="val red">1.000</div><div class="sub">12/12 caught · 0 false alarms</div></div>
+  <div class="stat"><div class="lbl">Quantified deltas</div><div class="val orange">$22.4k</div><div class="sub">+ $20.2k potential exposure (est.)</div></div>
+  <div class="stat"><div class="lbl">Citations verified</div><div class="val cyan">10/10</div><div class="sub">checked against stored page text</div></div>
 </div>
 
 <div class="tabs" role="tablist">
@@ -201,6 +202,7 @@ footer a:hover{text-decoration:underline}
       <span><span class="sev MEDIUM">MED</span> correct documents</span>
       <span><span class="sev LOW">LOW</span> monitor</span>
       <span style="color:var(--green)">✓ consistent</span>
+      <span>Exposure = quantified deltas + potential-exposure estimates (broker review required); buckets detailed in the compliance report</span>
     </div>
   </div>
   <div class="matrix-detail" id="mdetail" aria-live="polite"></div>
@@ -240,7 +242,7 @@ const QA = [
    a:'The B/L shows <b>BREMEN EXPRESS II</b>; the arrival notice shows <b>BREMEN EXPRESS</b> — flagged LOW (documents disagree, likely a truncation on the notice). The packing list on this shipment also reports net weight above gross weight (MEDIUM).',
    c:["bill_of_lading p.1","arrival_notice p.1"], conf:0.96},
   {q:"What's the total estimated exposure across all packs?",
-   a:'<b>$42,631</b> across the 6 held shipments — dominated by MSKU-2847 (<span class="hl">$23,068</span>: undervalued entry + incomplete ISF), CMAU-7913 ($10,250) and OOLU-8571 ($3,820).',
+   a:'Two buckets, never summed together: <b>$22,431 in quantified deltas</b> (recomputable from the documents — led by MSKU-2847\'s <span class="hl">$18,068</span> entered-value gap and TCLU-5015\'s $2,343 duty-rate delta) plus <b>~$20,200 in potential exposure</b> (flat estimates requiring broker review, incl. ISF liquidated-damages risk on MSKU-2847).',
    c:["reports/*_audit.json"], conf:0.99},
 ];
 
@@ -259,29 +261,29 @@ const MATRIX = [
 ];
 
 const REPORTS = [
- {sid:"MSKU-2847", hold:true, expo:"$23,068.40", items:[
+ {sid:"MSKU-2847", hold:true, expo:"$18,068.40 exact + $5,000 potential", items:[
    ["fail","✖","CRITICAL — Entered value $18,068.40 below commercial invoice total"],
    ["fail","✖","HIGH — ISF incomplete: Manufacturer element missing"],
    ["pass","✓","HTS 8517.62.0090 coherent with goods (wireless routers)"],
    ["pass","✓","Country of origin consistent (China) across 4 documents"]], approvable:true},
- {sid:"CMAU-7913", hold:true, expo:"$10,250.00", items:[
+ {sid:"CMAU-7913", hold:true, expo:"$10,250 potential (est.)", items:[
    ["fail","✖","CRITICAL — Country of origin: China (certificate) vs South Korea (invoice, entry)"],
    ["fail","✖","HIGH — Container number transposed on arrival notice"],
    ["pass","✓","ISF: all 10 importer data elements present"]]},
- {sid:"OOLU-8571", hold:true, expo:"$3,820.00", items:[
+ {sid:"OOLU-8571", hold:true, expo:"$2,020 exact + $1,800 potential", items:[
    ["fail","✖","CRITICAL — Entered value vs stated invoice total: -$1,010.00"],
    ["fail","✖","HIGH — Importer of record ≠ B/L consignee"],
    ["fail","✖","MEDIUM — Invoice line items do not sum to stated total"],
    ["pass","✓","ISF complete · origin consistent (Colombia)"]]},
- {sid:"TCLU-5015", hold:true, expo:"$3,192.97", items:[
+ {sid:"TCLU-5015", hold:true, expo:"$2,342.97 duty delta + $850 potential", items:[
    ["fail","✖","CRITICAL — HTS differs: 6109.10.0012 (invoice) vs 6104.62.2011 (entry)"],
    ["fail","✖","MEDIUM — Gross weight: packing list ~15% above B/L"],
    ["pass","✓","ISF complete · origin consistent (Bangladesh)"]]},
- {sid:"HLXU-2347", hold:true, expo:"$1,300.00", items:[
+ {sid:"HLXU-2347", hold:true, expo:"$1,300 potential (est.)", items:[
    ["fail","✖","MEDIUM — Package count short by 36 cartons on packing list"],
    ["fail","✖","LOW — Seal number mismatch on arrival notice"],
    ["pass","✓","ISF complete · values reconcile · origin consistent"]]},
- {sid:"TGHU-7401", hold:true, expo:"$1,000.00", items:[
+ {sid:"TGHU-7401", hold:true, expo:"$1,000 potential (est.)", items:[
    ["fail","✖","MEDIUM — Net weight exceeds gross weight on packing list"],
    ["fail","✖","LOW — Vessel name mismatch on arrival notice"],
    ["pass","✓","ISF complete · values reconcile · origin consistent"]]},
@@ -387,7 +389,7 @@ REPORTS.forEach(rep=>{
     <div class="card-head"><span class="sid">${rep.sid}</span>
       <span class="pill ${rep.hold?'hold':'clear'}" id="pill-${rep.sid}">${rep.hold?'HOLD — PENDING HUMAN REVIEW':'CLEAR — PENDING HUMAN REVIEW'}</span></div>
     <div class="card-body">${items}</div>
-    <div class="card-foot"><span>est. exposure <span class="expo ${rep.expo!=='$0.00'?'bad':''}">${rep.expo}</span></span>${approve}</div>`;
+    <div class="card-foot"><span>exposure <span class="expo ${rep.expo!=='$0.00'?'bad':''}">${rep.expo}</span></span>${approve}</div>`;
   cards.appendChild(card);
 });
 cards.addEventListener('click',e=>{
