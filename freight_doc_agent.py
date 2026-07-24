@@ -33,6 +33,7 @@ import time
 from pathlib import Path
 
 from tools import indexer, rag
+from tools.actions import approve_action, build_actions, send_action
 from tools.compliance import run_compliance
 from tools.governance import ReviewGate, TraceLog
 from tools.pdf_extract import extract_pack
@@ -103,7 +104,9 @@ def run_audit(packs: dict, trace: TraceLog) -> list[dict]:
     for sid, pack in packs.items():
         findings = reconcile_pack(pack, sid, trace=trace)
         compliance = run_compliance(pack, sid, trace=trace)
-        report = build_report(sid, findings, compliance, gate.status, trace.run_id)
+        follow_ups = build_actions(pack, sid, findings, compliance, trace=trace)
+        report = build_report(sid, findings, compliance, gate.status, trace.run_id,
+                              actions=follow_ups)
         reports.append(report)
     return reports
 
@@ -133,6 +136,42 @@ def cmd_audit(args, trace: TraceLog) -> None:
     print(f"Reports: {REPORT_DIR}/  ·  Audit trail: trace.jsonl (run {trace.run_id})")
     print("Status: PENDING_HUMAN_REVIEW — nothing is filed without an approval "
           "(freight_doc_agent.py approve --reviewer \"Name\").")
+
+
+def cmd_actions(args, trace: TraceLog) -> None:
+    if args.subcmd == "approve":
+        if not args.id:
+            print("Missing --id (e.g. MSKU-2847:isf_completeness)")
+            sys.exit(2)
+        try:
+            status = approve_action(args.id, args.reviewer or "", trace=trace)
+        except ValueError as e:
+            print(f"Refused: {e}")
+            sys.exit(2)
+        print(f"{args.id}: {status} by {args.reviewer} — recorded in trace.jsonl.")
+        return
+    if args.subcmd == "send":
+        try:
+            status = send_action(args.id, trace=trace)
+        except PermissionError as e:
+            print(f"Refused: {e}")
+            sys.exit(2)
+        print(f"{args.id}: {status} — no real email sent; copy the draft from the audit report.")
+        return
+    # list
+    packs = load_packs(Path(args.data), trace, shipment=args.shipment)
+    total = 0
+    for sid, pack in packs.items():
+        findings = reconcile_pack(pack, sid)
+        compliance = run_compliance(pack, sid)
+        for a in build_actions(pack, sid, findings, compliance):
+            total += 1
+            print(f"[{a.status}] {a.id}")
+            print(f"    {a.summary} → {a.recipient_name} <{a.recipient_email}>")
+            if args.drafts:
+                print("    " + a.draft_email.replace("\n", "\n    ") + "\n")
+    if not total:
+        print("No follow-up actions — all audited packs are clean.")
 
 
 def cmd_approve(args, trace: TraceLog) -> None:
@@ -207,12 +246,19 @@ def main() -> None:
     p_appr = sub.add_parser("approve", help="Record a human approval for an audited shipment")
     p_appr.add_argument("--shipment", required=True)
     p_appr.add_argument("--reviewer", required=True)
+    p_act = sub.add_parser("actions", help="List / approve / simulate-send follow-up actions")
+    p_act.add_argument("subcmd", choices=["list", "approve", "send"], nargs="?", default="list")
+    p_act.add_argument("--shipment", help="Filter to one shipment")
+    p_act.add_argument("--id", help="Action id, e.g. MSKU-2847:isf_completeness")
+    p_act.add_argument("--reviewer", help="Named human reviewer (required for approve)")
+    p_act.add_argument("--drafts", action="store_true", help="Print the draft emails")
 
     args = ap.parse_args()
     trace = TraceLog("trace.jsonl")
     trace.log("run.start", command=args.command, offline=bool(getattr(args, "offline", False)))
 
-    {"ingest": cmd_ingest, "ask": cmd_ask, "audit": cmd_audit, "approve": cmd_approve}[args.command](args, trace)
+    {"ingest": cmd_ingest, "ask": cmd_ask, "audit": cmd_audit,
+     "approve": cmd_approve, "actions": cmd_actions}[args.command](args, trace)
 
 
 if __name__ == "__main__":

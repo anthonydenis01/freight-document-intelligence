@@ -19,7 +19,7 @@ KIND_LABEL = {"exact_delta": "exact delta", "duty_delta": "duty-rate delta",
 
 
 def build_report(shipment_id: str, findings: list[Finding], compliance: list[ComplianceItem],
-                 status: str, run_id: str) -> dict[str, Any]:
+                 status: str, run_id: str, actions: list | None = None) -> dict[str, Any]:
     fails = [c for c in compliance if c.status == "FAIL"]
     quantified = round(sum(f.dollar_impact for f in findings
                            if f.impact_kind != POTENTIAL), 2)
@@ -39,6 +39,7 @@ def build_report(shipment_id: str, findings: list[Finding], compliance: list[Com
             "items": [c.to_dict() for c in compliance],
             "failed": len(fails),
         },
+        "follow_up_actions": [a.to_dict() for a in (actions or [])],
         "quantified_delta_usd": quantified,
         "potential_exposure_usd": potential,
         "filing_recommendation": ("HOLD — resolve findings before filing"
@@ -62,6 +63,13 @@ def print_report(report: dict[str, Any]) -> None:
     for c in comp["items"]:
         if c["status"] != "PASS":
             print(f"  {SEV_ICON.get(c['severity'], '·')} [{c['status']}] {c['detail']}")
+    acts = report.get("follow_up_actions", [])
+    if acts:
+        print(f"Follow-up actions ({len(acts)}) — approve with: "
+              f"freight_doc_agent.py actions approve --id <ID> --reviewer \"Name\"")
+        for a in acts:
+            print(f"  → [{a['status']}] {a['summary']}")
+            print(f"      to: {a['recipient_name']} <{a['recipient_email']}>   id: {a['id']}")
     print(f"Quantified deltas: ${report['quantified_delta_usd']:,.2f}   "
           f"Potential exposure (est.): ${report['potential_exposure_usd']:,.2f}")
     print(f"Recommendation: {report['filing_recommendation']}")

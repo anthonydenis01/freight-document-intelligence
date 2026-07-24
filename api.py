@@ -30,6 +30,7 @@ from fastapi import FastAPI, File, HTTPException, UploadFile
 from pydantic import BaseModel, Field
 
 from tools import indexer, rag
+from tools.actions import approve_action, build_actions, send_action
 from tools.compliance import run_compliance
 from tools.governance import ReviewGate, TraceLog
 from tools.pdf_extract import extract_pack
@@ -188,10 +189,43 @@ def report(shipment_id: str):
     items = run_compliance(pack, sid, trace=S.trace)
     gate = ReviewGate(S.trace)
     status = ReviewGate.APPROVED if sid in S.approvals else gate.status
-    rep = build_report(sid, findings, items, status, S.trace.run_id)
+    follow_ups = build_actions(pack, sid, findings, items, trace=S.trace)
+    rep = build_report(sid, findings, items, status, S.trace.run_id, actions=follow_ups)
     if sid in S.approvals:
         rep["approved_by"] = S.approvals[sid]
     return rep
+
+
+@app.get("/shipments/{shipment_id}/actions",
+         summary="Proposed follow-up actions with draft emails")
+def list_actions(shipment_id: str):
+    pack = _pack_or_404(shipment_id)
+    sid = shipment_id.upper()
+    findings = reconcile_pack(pack, sid, trace=S.trace)
+    items = run_compliance(pack, sid, trace=S.trace)
+    acts = build_actions(pack, sid, findings, items, trace=S.trace)
+    return {"shipment_id": sid, "actions": [a.to_dict() for a in acts]}
+
+
+@app.post("/actions/{action_id}/approve",
+          summary="One-click human approval of a follow-up action")
+def approve_follow_up(action_id: str, req: ReviewRequest):
+    try:
+        status = approve_action(action_id, req.reviewer, trace=S.trace)
+    except ValueError as e:
+        raise HTTPException(422, str(e)) from e
+    return {"action_id": action_id, "status": status, "reviewer": req.reviewer}
+
+
+@app.post("/actions/{action_id}/send",
+          summary="Simulated dispatch (requires prior approval; sends nothing)")
+def send_follow_up(action_id: str):
+    try:
+        status = send_action(action_id, trace=S.trace)
+    except PermissionError as e:
+        raise HTTPException(409, str(e)) from e
+    return {"action_id": action_id, "status": status,
+            "note": "No real email sent — copy the draft from the action into your mail client."}
 
 
 @app.post("/shipments/{shipment_id}/review", summary="Record a named human approval")

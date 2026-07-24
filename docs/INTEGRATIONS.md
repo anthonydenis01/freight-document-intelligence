@@ -31,6 +31,9 @@ SharePoint / folder   Teams / Copilot UI   ChatGPT action   Claude client   MCP 
 | GET | `/shipments/{id}/checklist` | ISF / HTS / origin compliance |
 | GET | `/shipments/{id}/report` | full audit report, exposure split |
 | POST | `/shipments/{id}/review` | record named human approval |
+| GET | `/shipments/{id}/actions` | proposed follow-up actions + draft emails |
+| POST | `/actions/{id}/approve` | one-click human approval of an action |
+| POST | `/actions/{id}/send` | simulated dispatch (409 without prior approval) |
 | POST | `/packs` | upload a new pack (PDFs) |
 | POST | `/packs/reindex` | re-extract + re-index |
 

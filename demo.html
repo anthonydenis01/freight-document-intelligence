@@ -8,26 +8,27 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0E1524; --panel:#151F33; --panel-2:#111A2C; --line:#26334E;
-  --ink:#E9EEF8; --muted:#8C99B3; --faint:#5C6A85;
-  --orange:#FF8A3D; --green:#3DD68C; --amber:#F2B33D; --red:#FF5C6C; --cyan:#6FB7E8;
+  /* Harbor palette — deep navy + sea teal */
+  --bg:#0A1622; --panel:#10222E; --panel-2:#0C1A24; --line:#1E3A47;
+  --ink:#E6EDF3; --muted:#8CA3B3; --faint:#5C7484;
+  --accent:#2DD4BF; --green:#34D399; --amber:#FBBF24; --red:#F87171; --cyan:#7CB3E8;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:15px;line-height:1.5}
-::selection{background:var(--orange);color:#151515}
-button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+::selection{background:var(--accent);color:#151515}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .wrap{max-width:1180px;margin:0 auto;padding:22px 26px 60px}
 .mono{font-family:'IBM Plex Mono',monospace}
 
 /* header */
 header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:12px}
-.brand-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(145deg,var(--orange),#d9641c);display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-weight:600;color:#141414;font-size:15px}
+.brand-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(145deg,var(--accent),#0E9488);display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-weight:600;color:#141414;font-size:15px}
 .brand h1{font-size:17px;font-weight:700}
 .brand .sub{font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
 .head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .datebadge{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);border:1px solid var(--line);padding:7px 12px;border-radius:7px}
-.gov-badge{display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);border:1px solid rgba(61,214,140,.35);padding:7px 12px;border-radius:7px}
+.gov-badge{display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);border:1px solid rgba(52,211,153,.35);padding:7px 12px;border-radius:7px}
 .gov-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
 
 /* stat row */
@@ -37,12 +38,12 @@ header{display:flex;align-items:center;justify-content:space-between;gap:16px;pa
 .stat .lbl{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px}
 .stat .val{font-size:26px;font-weight:700;font-family:'IBM Plex Mono',monospace}
 .stat .sub{font-size:12px;color:var(--muted);margin-top:2px}
-.stat .val.orange{color:var(--orange)} .stat .val.red{color:var(--red)} .stat .val.green{color:var(--green)} .stat .val.cyan{color:var(--cyan)}
+.stat .val.orange{color:var(--accent)} .stat .val.red{color:var(--red)} .stat .val.green{color:var(--green)} .stat .val.cyan{color:var(--cyan)}
 
 /* tabs */
 .tabs{display:flex;gap:8px;margin:6px 0 18px;flex-wrap:wrap}
 .tab{font-family:'IBM Plex Mono',monospace;font-size:13px;padding:9px 16px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
-.tab[aria-selected="true"]{background:var(--orange);border-color:var(--orange);color:#161616;font-weight:600}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#161616;font-weight:600}
 .tab:hover{color:var(--ink)}
 .tab[aria-selected="true"]:hover{color:#161616}
 .view{display:none} .view.on{display:block}
@@ -57,21 +58,21 @@ header{display:flex;align-items:center;justify-content:space-between;gap:16px;pa
 @media(max-width:940px){.chat-grid{grid-template-columns:1fr}}
 .chat-log{padding:18px 16px;min-height:340px;max-height:480px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
 .msg{max-width:92%;border-radius:10px;padding:11px 14px;font-size:14px}
-.msg.q{align-self:flex-end;background:#1E2C47;border:1px solid #2E3F60}
+.msg.q{align-self:flex-end;background:#12303B;border:1px solid #1E4A57}
 .msg.a{align-self:flex-start;background:var(--panel-2);border:1px solid var(--line)}
 .msg.a .hl{color:var(--red);font-weight:600}
 .msg.a .ok{color:var(--green);font-weight:600}
 .cites{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
-.cite{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--cyan);border:1px solid rgba(111,183,232,.35);border-radius:4px;padding:2px 7px;background:rgba(111,183,232,.06)}
+.cite{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--cyan);border:1px solid rgba(124,179,232,.35);border-radius:4px;padding:2px 7px;background:rgba(124,179,232,.06)}
 .confrow{display:flex;align-items:center;gap:8px;margin-top:8px}
-.confbar{height:5px;border-radius:3px;background:#26334E;flex:1;max-width:130px;overflow:hidden}
+.confbar{height:5px;border-radius:3px;background:#1E3A47;flex:1;max-width:130px;overflow:hidden}
 .confbar i{display:block;height:100%;background:var(--green)}
 .conflbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint)}
 .chat-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line);background:var(--panel-2)}
 .chat-input input{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:10px 12px;font-family:'IBM Plex Sans',sans-serif;font-size:14px}
 .btn{font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;border-radius:8px;padding:9px 18px;cursor:pointer;border:1px solid transparent;transition:transform .08s,opacity .15s}
 .btn:active{transform:translateY(1px)}
-.btn-run{background:var(--orange);color:#161616}
+.btn-run{background:var(--accent);color:#161616}
 .btn-run:hover{opacity:.92}
 .suggest{padding:14px 16px;display:flex;flex-direction:column;gap:8px}
 .sugg{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:left;color:var(--muted);border:1px solid var(--line);background:var(--panel-2);border-radius:8px;padding:10px 12px;cursor:pointer}
@@ -82,16 +83,16 @@ header{display:flex;align-items:center;justify-content:space-between;gap:16px;pa
 .tbl-scroll{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:900px}
 th{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);font-weight:600;text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-td{padding:10px;border-bottom:1px solid rgba(38,51,78,.55);vertical-align:middle;white-space:nowrap}
+td{padding:10px;border-bottom:1px solid rgba(30,58,71,.55);vertical-align:middle;white-space:nowrap}
 tr:last-child td{border-bottom:none}
-tbody tr:hover{background:rgba(38,51,78,.25)}
+tbody tr:hover{background:rgba(30,58,71,.25)}
 .sid{font-family:'IBM Plex Mono',monospace;font-weight:600}
 .cell-ok{color:var(--green);font-family:'IBM Plex Mono',monospace}
 .sev{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;border-radius:4px;padding:2px 8px;cursor:help}
-.sev.CRITICAL{color:var(--red);border:1px solid rgba(255,92,108,.45);background:rgba(255,92,108,.08)}
-.sev.HIGH{color:var(--orange);border:1px solid rgba(255,138,61,.45);background:rgba(255,138,61,.08)}
-.sev.MEDIUM{color:var(--amber);border:1px solid rgba(242,179,61,.4);background:rgba(242,179,61,.07)}
-.sev.LOW{color:var(--cyan);border:1px solid rgba(111,183,232,.4);background:rgba(111,183,232,.07)}
+.sev.CRITICAL{color:var(--red);border:1px solid rgba(248,113,113,.45);background:rgba(248,113,113,.08)}
+.sev.HIGH{color:#FB923C;border:1px solid rgba(251,146,60,.45);background:rgba(251,146,60,.08)}
+.sev.MEDIUM{color:var(--amber);border:1px solid rgba(251,191,36,.4);background:rgba(251,191,36,.07)}
+.sev.LOW{color:var(--cyan);border:1px solid rgba(124,179,232,.4);background:rgba(124,179,232,.07)}
 .expo{font-family:'IBM Plex Mono',monospace}
 .expo.bad{color:var(--red)}
 .matrix-detail{margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2);font-size:13.5px;color:var(--muted);display:none}
@@ -107,8 +108,8 @@ tbody tr:hover{background:rgba(38,51,78,.25)}
 .card-head{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;background:var(--panel-2);border-bottom:1px solid var(--line);gap:8px;flex-wrap:wrap}
 .card-head .sid{font-size:14.5px}
 .pill{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;border-radius:20px;padding:3px 10px}
-.pill.hold{color:var(--red);border:1px solid rgba(255,92,108,.45)}
-.pill.clear{color:var(--green);border:1px solid rgba(61,214,140,.4)}
+.pill.hold{color:var(--red);border:1px solid rgba(248,113,113,.45)}
+.pill.clear{color:var(--green);border:1px solid rgba(52,211,153,.4)}
 .pill.approved{color:#161616;background:var(--green)}
 .card-body{padding:13px 15px;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
 .citem{display:flex;gap:9px;align-items:baseline}
@@ -128,8 +129,29 @@ tbody tr:hover{background:rgba(38,51,78,.25)}
 .trail-log{padding:12px 16px;max-height:170px;overflow-y:auto;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 .trail-log .act{color:var(--cyan)} .trail-log .hum{color:var(--green)}
 
+/* follow-up actions */
+.tab-badge{display:inline-block;background:var(--red);color:#10222E;border-radius:9px;font-size:10.5px;font-weight:700;padding:1px 7px;margin-left:6px;vertical-align:1px}
+.act-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+.act-head .lbl{font-size:12.5px;color:var(--muted)}
+.act-head input{background:var(--bg);border:1px solid var(--line);border-radius:7px;color:var(--ink);padding:7px 10px;font-size:13px;width:160px;font-family:'IBM Plex Sans',sans-serif}
+.act-list{display:flex;flex-direction:column}
+.act-item{display:flex;flex-direction:column;gap:7px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.act-item:last-child{border-bottom:none}
+.act-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.act-top .sum{font-weight:600}
+.act-to{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)}
+.act-to b{color:var(--cyan);font-weight:500}
+.act-item details{font-size:12.5px;color:var(--muted)}
+.act-item summary{cursor:pointer;color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11.5px}
+.act-item pre{white-space:pre-wrap;font-family:'IBM Plex Mono',monospace;font-size:11.5px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;margin-top:8px;color:var(--muted)}
+.act-status{margin-left:auto;display:flex;align-items:center;gap:8px}
+.st{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;border-radius:20px;padding:3px 10px;letter-spacing:.4px}
+.st.PROPOSED{color:var(--amber);border:1px solid rgba(251,191,36,.4)}
+.st.APPROVED{color:var(--accent);border:1px solid rgba(45,212,191,.45)}
+.st.SENT{color:#10222E;background:var(--green)}
+
 footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--faint)}
-footer a{color:var(--orange);text-decoration:none}
+footer a{color:var(--accent);text-decoration:none}
 footer a:hover{text-decoration:underline}
 </style>
 </head>
@@ -146,7 +168,7 @@ footer a:hover{text-decoration:underline}
   </div>
   <div class="head-right">
     <span class="gov-badge"><span class="dot"></span>HUMAN-IN-THE-LOOP GATE ON</span>
-    <span class="gov-badge" style="color:var(--cyan);border-color:rgba(111,183,232,.35)"><span class="dot" style="background:var(--cyan)"></span>API-FIRST · OPENAPI</span>
+    <span class="gov-badge" style="color:var(--cyan);border-color:rgba(124,179,232,.35)"><span class="dot" style="background:var(--cyan)"></span>API-FIRST · OPENAPI</span>
     <span class="datebadge">RUN 2026-07-24 · 10 PACKS · 80 DOCS</span>
   </div>
 </header>
@@ -163,6 +185,7 @@ footer a:hover{text-decoration:underline}
   <button class="tab" role="tab" aria-selected="true" data-view="ask">ASK THE DOCS</button>
   <button class="tab" role="tab" aria-selected="false" data-view="matrix">RECONCILIATION MATRIX</button>
   <button class="tab" role="tab" aria-selected="false" data-view="report">COMPLIANCE REPORT</button>
+  <button class="tab" role="tab" aria-selected="false" data-view="actions">FOLLOW-UP ACTIONS <span class="tab-badge" id="actbadge">13</span></button>
 </div>
 
 <!-- ============ ASK ============ -->
@@ -214,6 +237,19 @@ footer a:hover{text-decoration:underline}
   <div class="panel trail">
     <div class="panel-head"><h2>Decision audit trail — trace.jsonl</h2><span class="meta">every agent decision, append-only</span></div>
     <div class="trail-log" id="trail"></div>
+  </div>
+</section>
+
+<!-- ============ FOLLOW-UP ACTIONS ============ -->
+<section class="view" id="view-actions">
+  <div class="panel">
+    <div class="panel-head"><h2>Follow-up action queue — the agent proposes, you approve</h2><span class="meta">1 click · nothing is sent without a named reviewer · dispatch simulated</span></div>
+    <div class="act-head">
+      <span class="lbl">Reviewer name (required for approval):</span>
+      <input id="act-reviewer" type="text" placeholder="e.g. A. Denis" aria-label="Reviewer name">
+      <span class="lbl mono" id="act-count"></span>
+    </div>
+    <div class="act-list" id="actlist"></div>
   </div>
 </section>
 
@@ -305,6 +341,41 @@ const TRAIL0 = [
  ["10:41:07","run.status","10 packs audited → PENDING_HUMAN_REVIEW (agent files nothing)"],
 ];
 
+function draft(sid, sev, detail, req, to){
+  return `To: ${to}
+Subject: [${sev}] Shipment ${sid} - document discrepancy, action required
+
+Hello,
+
+Our pre-filing document audit for shipment ${sid} flagged the following:
+
+  ${detail}
+
+Requested action: please ${req}.
+
+This shipment is on HOLD on our side until resolved.
+
+Thank you,
+Import operations desk
+-- generated by freight-document-intelligence (synthetic demo);
+   reviewed and released by a named human before any send --`;
+}
+const ACTIONS = [
+ {id:"MSKU-2847:declared_value", sid:"MSKU-2847", sev:"CRITICAL", sum:"Hold entry & reconcile declared value", to:"Panamerican Customs Brokers", em:"entryteam@panamerican-cb.example", detail:"Entered value $46,800.00 vs commercial invoice total $64,868.40 (-$18,068.40)", req:"hold the entry and align the entered value with the commercial invoice total (or obtain a corrected invoice from the shipper)"},
+ {id:"TCLU-5015:hts", sid:"TCLU-5015", sev:"CRITICAL", sum:"Confirm HTS classification with broker", to:"Panamerican Customs Brokers", em:"entryteam@panamerican-cb.example", detail:"Entry HTS 6104.62.2011 (14.9%) differs from invoice HTS 6109.10.0012 (16.5%)", req:"confirm the correct HTS classification and amend the draft entry before filing"},
+ {id:"CMAU-7913:coo", sid:"CMAU-7913", sev:"CRITICAL", sum:"Resolve country-of-origin conflict", to:"Busan Autoparts Industrial Co", em:"export.docs@busan.example", detail:"Certificate of origin shows China; invoice, ISF and entry show South Korea", req:"confirm the true country of origin and reissue the certificate of origin so all documents agree"},
+ {id:"OOLU-8571:declared_value", sid:"OOLU-8571", sev:"CRITICAL", sum:"Hold entry & reconcile declared value", to:"Panamerican Customs Brokers", em:"entryteam@panamerican-cb.example", detail:"Entered value differs from stated invoice total by $1,010.00 (cascade of invoice math error)", req:"hold the entry until the corrected invoice arrives, then align the entered value"},
+ {id:"MSKU-2847:isf", sid:"MSKU-2847", sev:"HIGH", sum:"Complete & re-file ISF", to:"Meridian Global Forwarding", em:"isf@meridianglobal.example", detail:"ISF-10 element missing: Manufacturer (or supplier) — up to $5,000 liquidated damages", req:"complete and re-transmit the ISF with the missing element immediately"},
+ {id:"CMAU-7913:container", sid:"CMAU-7913", sev:"HIGH", sum:"Request corrected arrival notice (container no.)", to:"Carrier documentation desk", em:"docdesk@carrier.example", detail:"Arrival notice container number has transposed digits vs the B/L", req:"reissue the arrival notice with the container number matching the B/L"},
+ {id:"OOLU-8571:consignee", sid:"OOLU-8571", sev:"HIGH", sum:"Correct importer of record on entry", to:"Panamerican Customs Brokers", em:"entryteam@panamerican-cb.example", detail:"Entry importer of record does not match B/L consignee", req:"correct the importer-of-record on the draft entry to match the B/L consignee"},
+ {id:"OOLU-8571:invoice_math", sid:"OOLU-8571", sev:"MEDIUM", sum:"Request corrected commercial invoice", to:"Cafetera del Huila S.A.S.", em:"export.docs@cafetera.example", detail:"Stated invoice total exceeds the sum of line items by $1,010.00", req:"issue a corrected commercial invoice whose line items sum to the stated total"},
+ {id:"TCLU-5015:weight", sid:"TCLU-5015", sev:"MEDIUM", sum:"Reconcile gross weight / request reweigh", to:"Dhaka Apparel Works Ltd", em:"export.docs@dhaka.example", detail:"Packing list gross weight ~15% above the B/L figure", req:"confirm the actual gross weight (reweigh if needed) and reissue the packing list"},
+ {id:"HLXU-2347:packages", sid:"HLXU-2347", sev:"MEDIUM", sum:"Reconcile package count", to:"Ningbo Brightplay Toys Co Ltd", em:"export.docs@ningbo.example", detail:"Packing list carton count 36 short of B/L count", req:"confirm the shipped carton count and reissue the packing list"},
+ {id:"TGHU-7401:netgross", sid:"TGHU-7401", sev:"MEDIUM", sum:"Request corrected packing list (net > gross)", to:"Pompe Adriatica S.R.L.", em:"export.docs@pompe.example", detail:"Packing list net weight (13,017.8 kg) exceeds its own gross weight (12,280.9 kg)", req:"correct the packing list - net weight currently exceeds gross weight"},
+ {id:"HLXU-2347:seal", sid:"HLXU-2347", sev:"LOW", sum:"Verify seal at terminal", to:"POMTOC terminal - Miami", em:"gateops@pomtoc.example", detail:"Arrival notice seal number differs from B/L seal", req:"verify the physical seal on arrival and report the seal number found"},
+ {id:"TGHU-7401:vessel", sid:"TGHU-7401", sev:"LOW", sum:"Confirm vessel name with carrier", to:"Carrier documentation desk", em:"docdesk@carrier.example", detail:"Arrival notice vessel BREMEN EXPRESS vs B/L BREMEN EXPRESS II", req:"confirm the importing vessel name and correct the arrival notice"},
+];
+
 /* ---------- tabs ---------- */
 const tabs=[...document.querySelectorAll('.tab')];
 tabs.forEach(t=>t.addEventListener('click',()=>{
@@ -392,6 +463,47 @@ REPORTS.forEach(rep=>{
     <div class="card-foot"><span>exposure <span class="expo ${rep.expo!=='$0.00'?'bad':''}">${rep.expo}</span></span>${approve}</div>`;
   cards.appendChild(card);
 });
+/* ---------- follow-up action queue ---------- */
+const actlist=document.getElementById('actlist');
+let pendingActions=ACTIONS.length;
+function refreshActCount(){
+  document.getElementById('act-count').textContent=`${pendingActions} awaiting review · ${ACTIONS.length-pendingActions} processed`;
+  document.getElementById('actbadge').textContent=pendingActions;
+}
+ACTIONS.forEach(a=>{
+  const div=document.createElement('div'); div.className='act-item'; div.id='act-'+a.id;
+  div.innerHTML=`
+    <div class="act-top">
+      <span class="sev ${a.sev}">${a.sev.slice(0,4)}</span>
+      <span class="sid">${a.sid}</span>
+      <span class="sum">${a.sum}</span>
+      <span class="act-status">
+        <span class="st PROPOSED" id="st-${a.id}">PROPOSED</span>
+        <button class="btn btn-sm btn-run" data-actid="${a.id}">Approve &amp; queue</button>
+      </span>
+    </div>
+    <div class="act-to">to: <b>${a.to}</b> &lt;${a.em}&gt; — ${a.detail}</div>
+    <details><summary>view draft email</summary><pre>${draft(a.sid,a.sev,a.detail,a.req,a.to+' <'+a.em+'>')}</pre></details>`;
+  actlist.appendChild(div);
+});
+refreshActCount();
+actlist.addEventListener('click',e=>{
+  const b=e.target.closest('[data-actid]'); if(!b) return;
+  const name=document.getElementById('act-reviewer').value.trim();
+  const st=document.getElementById('st-'+b.dataset.actid);
+  if(!name){ document.getElementById('act-reviewer').focus();
+    document.getElementById('act-reviewer').placeholder='name required — no auto-approve'; return; }
+  st.className='st APPROVED'; st.textContent='APPROVED · '+name;
+  b.disabled=true; b.style.opacity=.4;
+  const ts=new Date().toTimeString().slice(0,8);
+  trailAdd(ts,'action.approved',`${b.dataset.actid} reviewer="${name}"`,true);
+  setTimeout(()=>{
+    st.className='st SENT'; st.textContent='SENT (SIMULATED)';
+    trailAdd(new Date().toTimeString().slice(0,8),'action.sent_simulated',`${b.dataset.actid} — no real email sent`,true);
+    pendingActions--; refreshActCount();
+  },700);
+});
+
 cards.addEventListener('click',e=>{
   const b=e.target.closest('[data-approve]'); if(!b) return;
   const sid=b.dataset.approve;

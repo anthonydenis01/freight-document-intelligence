@@ -31,6 +31,13 @@ pre-filing.
 - **Compliance checklist** — ISF-10 completeness, HTS format +
   chapter/description plausibility, origin consistency → audit-ready
   report per shipment
+- **Follow-up actions with one-click human approval** — every finding
+  proposes its resolution: who to contact (shipper, broker, carrier,
+  forwarder, terminal), what to ask for, and a ready-to-send draft email
+  quoting the exact values and citations. Workflow:
+  `PROPOSED → APPROVED (named reviewer, one click) → SENT_SIMULATED` —
+  the agent has no mailbox access by design; dispatch is simulated and
+  the draft is yours to copy
 - **Human review gate + full traceability** — reports are always
   `PENDING_HUMAN_REVIEW`; only a named reviewer can approve, and every
   decision (passes included) is appended to `trace.jsonl`
@@ -69,6 +76,11 @@ python freight_doc_agent.py --offline audit
 export ANTHROPIC_API_KEY=sk-...   # Claude (default)
 python freight_doc_agent.py audit
 python freight_doc_agent.py --provider openai ask "Why is CMAU-7913 risky to file as-is?"
+
+# Follow-up actions: list drafts, approve (1 command), simulate dispatch
+python freight_doc_agent.py --offline actions list --shipment MSKU-2847 --drafts
+python freight_doc_agent.py --offline actions approve --id "MSKU-2847:isf_completeness" --reviewer "A. Denis"
+python freight_doc_agent.py --offline actions send --id "MSKU-2847:isf_completeness"
 
 # Record the human sign-off (nothing is 'filed' without it)
 python freight_doc_agent.py approve --shipment MSKU-2847 --reviewer "A. Denis"
