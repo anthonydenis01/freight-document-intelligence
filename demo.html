@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freight Document Intelligence — RAG Q&amp;A + Compliance Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E1524; --panel:#151F33; --panel-2:#111A2C; --line:#26334E;
+  --ink:#E9EEF8; --muted:#8C99B3; --faint:#5C6A85;
+  --orange:#FF8A3D; --green:#3DD68C; --amber:#F2B33D; --red:#FF5C6C; --cyan:#6FB7E8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:15px;line-height:1.5}
+::selection{background:var(--orange);color:#151515}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 26px 60px}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+/* header */
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(145deg,var(--orange),#d9641c);display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-weight:600;color:#141414;font-size:15px}
+.brand h1{font-size:17px;font-weight:700}
+.brand .sub{font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.datebadge{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);border:1px solid var(--line);padding:7px 12px;border-radius:7px}
+.gov-badge{display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);border:1px solid rgba(61,214,140,.35);padding:7px 12px;border-radius:7px}
+.gov-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+
+/* stat row */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:20px 0 18px}
+@media(max-width:940px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.stat .lbl{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px}
+.stat .val{font-size:26px;font-weight:700;font-family:'IBM Plex Mono',monospace}
+.stat .sub{font-size:12px;color:var(--muted);margin-top:2px}
+.stat .val.orange{color:var(--orange)} .stat .val.red{color:var(--red)} .stat .val.green{color:var(--green)} .stat .val.cyan{color:var(--cyan)}
+
+/* tabs */
+.tabs{display:flex;gap:8px;margin:6px 0 18px;flex-wrap:wrap}
+.tab{font-family:'IBM Plex Mono',monospace;font-size:13px;padding:9px 16px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--orange);border-color:var(--orange);color:#161616;font-weight:600}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]:hover{color:#161616}
+.view{display:none} .view.on{display:block}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--line);background:var(--panel-2);gap:10px;flex-wrap:wrap}
+.panel-head h2{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1.3px;color:var(--muted)}
+.panel-head .meta{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint)}
+
+/* chat */
+.chat-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:940px){.chat-grid{grid-template-columns:1fr}}
+.chat-log{padding:18px 16px;min-height:340px;max-height:480px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+.msg{max-width:92%;border-radius:10px;padding:11px 14px;font-size:14px}
+.msg.q{align-self:flex-end;background:#1E2C47;border:1px solid #2E3F60}
+.msg.a{align-self:flex-start;background:var(--panel-2);border:1px solid var(--line)}
+.msg.a .hl{color:var(--red);font-weight:600}
+.msg.a .ok{color:var(--green);font-weight:600}
+.cites{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.cite{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--cyan);border:1px solid rgba(111,183,232,.35);border-radius:4px;padding:2px 7px;background:rgba(111,183,232,.06)}
+.confrow{display:flex;align-items:center;gap:8px;margin-top:8px}
+.confbar{height:5px;border-radius:3px;background:#26334E;flex:1;max-width:130px;overflow:hidden}
+.confbar i{display:block;height:100%;background:var(--green)}
+.conflbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint)}
+.chat-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line);background:var(--panel-2)}
+.chat-input input{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:10px 12px;font-family:'IBM Plex Sans',sans-serif;font-size:14px}
+.btn{font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;border-radius:8px;padding:9px 18px;cursor:pointer;border:1px solid transparent;transition:transform .08s,opacity .15s}
+.btn:active{transform:translateY(1px)}
+.btn-run{background:var(--orange);color:#161616}
+.btn-run:hover{opacity:.92}
+.suggest{padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.sugg{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:left;color:var(--muted);border:1px solid var(--line);background:var(--panel-2);border-radius:8px;padding:10px 12px;cursor:pointer}
+.sugg:hover{color:var(--ink);border-color:var(--faint)}
+.sugg.used{opacity:.45}
+
+/* matrix */
+.tbl-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:900px}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);font-weight:600;text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px;border-bottom:1px solid rgba(38,51,78,.55);vertical-align:middle;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(38,51,78,.25)}
+.sid{font-family:'IBM Plex Mono',monospace;font-weight:600}
+.cell-ok{color:var(--green);font-family:'IBM Plex Mono',monospace}
+.sev{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;border-radius:4px;padding:2px 8px;cursor:help}
+.sev.CRITICAL{color:var(--red);border:1px solid rgba(255,92,108,.45);background:rgba(255,92,108,.08)}
+.sev.HIGH{color:var(--orange);border:1px solid rgba(255,138,61,.45);background:rgba(255,138,61,.08)}
+.sev.MEDIUM{color:var(--amber);border:1px solid rgba(242,179,61,.4);background:rgba(242,179,61,.07)}
+.sev.LOW{color:var(--cyan);border:1px solid rgba(111,183,232,.4);background:rgba(111,183,232,.07)}
+.expo{font-family:'IBM Plex Mono',monospace}
+.expo.bad{color:var(--red)}
+.matrix-detail{margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2);font-size:13.5px;color:var(--muted);display:none}
+.matrix-detail.on{display:block}
+.matrix-detail b{color:var(--ink)}
+.matrix-detail .cite{margin-left:6px}
+.legend{display:flex;gap:14px;padding:12px 16px;border-top:1px solid var(--line);flex-wrap:wrap;font-size:12px;color:var(--muted)}
+
+/* compliance cards */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:2px}
+@media(max-width:940px){.cards{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.card-head{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;background:var(--panel-2);border-bottom:1px solid var(--line);gap:8px;flex-wrap:wrap}
+.card-head .sid{font-size:14.5px}
+.pill{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;border-radius:20px;padding:3px 10px}
+.pill.hold{color:var(--red);border:1px solid rgba(255,92,108,.45)}
+.pill.clear{color:var(--green);border:1px solid rgba(61,214,140,.4)}
+.pill.approved{color:#161616;background:var(--green)}
+.card-body{padding:13px 15px;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
+.citem{display:flex;gap:9px;align-items:baseline}
+.citem .ic{font-family:'IBM Plex Mono',monospace;width:14px;flex-shrink:0}
+.citem.fail .ic{color:var(--red)} .citem.pass .ic{color:var(--green)} .citem.warn .ic{color:var(--amber)}
+.citem .t{color:var(--muted)} .citem.fail .t{color:var(--ink)}
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 15px;border-top:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);flex-wrap:wrap}
+.card-foot .expo.bad{font-size:13px}
+.approve-row{display:flex;gap:8px;align-items:center}
+.approve-row input{background:var(--bg);border:1px solid var(--line);border-radius:7px;color:var(--ink);padding:6px 9px;font-size:12.5px;width:130px;font-family:'IBM Plex Sans',sans-serif}
+.btn-sm{font-size:12.5px;padding:6px 12px;border-radius:7px}
+.btn-ghost{background:transparent;color:var(--muted);border-color:var(--line)}
+.btn-ghost:hover{color:var(--ink);border-color:var(--faint)}
+
+/* trail */
+.trail{margin-top:18px}
+.trail-log{padding:12px 16px;max-height:170px;overflow-y:auto;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.trail-log .act{color:var(--cyan)} .trail-log .hum{color:var(--green)}
+
+footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--faint)}
+footer a{color:var(--orange);text-decoration:none}
+footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <div class="brand-mark">FD</div>
+    <div>
+      <h1>Freight Document Intelligence</h1>
+      <div class="sub">RAG Q&amp;A · cross-doc reconciliation · compliance audit — synthetic demo</div>
+    </div>
+  </div>
+  <div class="head-right">
+    <span class="gov-badge"><span class="dot"></span>HUMAN-IN-THE-LOOP GATE ON</span>
+    <span class="datebadge">RUN 2026-07-24 · 10 PACKS · 80 DOCS</span>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="lbl">Shipment packs</div><div class="val">10</div><div class="sub">8 documents each</div></div>
+  <div class="stat"><div class="lbl">Extraction accuracy</div><div class="val green">100%</div><div class="sub">870/870 fields vs ground truth</div></div>
+  <div class="stat"><div class="lbl">Discrepancies caught</div><div class="val red">12/12</div><div class="sub">100% of injected mismatches</div></div>
+  <div class="stat"><div class="lbl">Est. exposure flagged</div><div class="val orange">$42.6k</div><div class="sub">across 6 held shipments</div></div>
+  <div class="stat"><div class="lbl">Answers cited</div><div class="val cyan">100%</div><div class="sub">document + page, every answer</div></div>
+</div>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-view="ask">ASK THE DOCS</button>
+  <button class="tab" role="tab" aria-selected="false" data-view="matrix">RECONCILIATION MATRIX</button>
+  <button class="tab" role="tab" aria-selected="false" data-view="report">COMPLIANCE REPORT</button>
+</div>
+
+<!-- ============ ASK ============ -->
+<section class="view on" id="view-ask">
+  <div class="chat-grid">
+    <div class="panel">
+      <div class="panel-head"><h2>Ask your shipping documents anything</h2><span class="meta">citations mandatory</span></div>
+      <div class="chat-log" id="chatlog">
+        <div class="msg a">Ask a question across all 10 document packs — every answer cites its source document and page, with a confidence score. Try a suggested question →</div>
+      </div>
+      <div class="chat-input">
+        <input id="qinput" type="text" placeholder="e.g. Declared value vs invoice total for MSKU-2847?" aria-label="Question">
+        <button class="btn btn-run" id="askbtn">Ask</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Suggested questions</h2></div>
+      <div class="suggest" id="suggest"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MATRIX ============ -->
+<section class="view" id="view-matrix">
+  <div class="panel">
+    <div class="panel-head"><h2>Reconciliation matrix — 12 checks × 10 shipments</h2><span class="meta">click a flag for detail</span></div>
+    <div class="tbl-scroll"><table id="matrix">
+      <thead><tr>
+        <th>Shipment</th><th>Value</th><th>Inv. Math</th><th>HTS</th><th>Origin</th>
+        <th>Party</th><th>Container</th><th>Vessel/Seal</th><th>Weights</th><th>Packages</th><th>ISF</th><th>Exposure</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <div class="legend">
+      <span><span class="sev CRITICAL">CRIT</span> blocks filing</span>
+      <span><span class="sev HIGH">HIGH</span> resolve before release</span>
+      <span><span class="sev MEDIUM">MED</span> correct documents</span>
+      <span><span class="sev LOW">LOW</span> monitor</span>
+      <span style="color:var(--green)">✓ consistent</span>
+    </div>
+  </div>
+  <div class="matrix-detail" id="mdetail" aria-live="polite"></div>
+</section>
+
+<!-- ============ REPORT ============ -->
+<section class="view" id="view-report">
+  <div class="cards" id="cards"></div>
+  <div class="panel trail">
+    <div class="panel-head"><h2>Decision audit trail — trace.jsonl</h2><span class="meta">every agent decision, append-only</span></div>
+    <div class="trail-log" id="trail"></div>
+  </div>
+</section>
+
+<footer>
+  <div>All data synthetic — generated by <span class="mono">data/generate_sample_data.py</span>. No real shipment, shipper or consignee data.</div>
+  <div><a href="https://github.com/anthonydenis01/freight-document-intelligence">github.com/anthonydenis01/freight-document-intelligence</a> · MIT</div>
+</footer>
+</div>
+
+<script>
+/* ---------- static demo data (mirrors real agent output: eval_results.json + reports/) ---------- */
+const QA = [
+  {q:"What's the declared value vs invoice total for shipment MSKU-2847?",
+   a:'MSKU-2847: declared value = <b>$46,800.00</b> (per customs entry); invoice total = <b>$64,868.40</b> (per commercial invoice). Difference: <span class="hl">$18,068.40 — MISMATCH</span>, review before filing.',
+   c:["customs_entry p.1","commercial_invoice p.1"], conf:0.99},
+  {q:"Which shipments are clear to file?",
+   a:'<span class="ok">4 of 10 packs are clean</span>: APZU-8397, FCIU-8271, MSCU-5011 and TRLU-2770 — 12/12 reconciliation checks consistent and all compliance items PASS. They are marked CLEAR TO PROPOSE FOR FILING (still pending human approval).',
+   c:["audit reports ×4"], conf:0.97},
+  {q:"Why is CMAU-7913 on hold?",
+   a:'Two findings: <span class="hl">country of origin conflict</span> — the certificate of origin shows <b>China</b> while the invoice and entry show <b>South Korea</b> (CRITICAL); and the arrival notice container number has transposed digits vs the B/L (HIGH). Estimated exposure: <b>$10,250</b>.',
+   c:["certificate_of_origin p.1","commercial_invoice p.1","arrival_notice p.1"], conf:0.95},
+  {q:"Is the ISF complete for MSKU-2847?",
+   a:'<span class="hl">No.</span> The ISF was filed with the <b>Manufacturer</b> element blank — 9 of 10 ISF importer data elements present. Exposure: up to <b>$5,000</b> in liquidated damages per violation.',
+   c:["isf_filing p.1"], conf:0.98},
+  {q:"What vessel is carrying TGHU-7401?",
+   a:'The B/L shows <b>BREMEN EXPRESS II</b>; the arrival notice shows <b>BREMEN EXPRESS</b> — flagged LOW (documents disagree, likely a truncation on the notice). The packing list on this shipment also reports net weight above gross weight (MEDIUM).',
+   c:["bill_of_lading p.1","arrival_notice p.1"], conf:0.96},
+  {q:"What's the total estimated exposure across all packs?",
+   a:'<b>$42,631</b> across the 6 held shipments — dominated by MSKU-2847 (<span class="hl">$23,068</span>: undervalued entry + incomplete ISF), CMAU-7913 ($10,250) and OOLU-8571 ($3,820).',
+   c:["reports/*_audit.json"], conf:0.99},
+];
+
+const CHECKS = ["value","math","hts","origin","party","container","vseal","weights","packages","isf"];
+const MATRIX = [
+ {sid:"MSKU-2847", expo:23068, flags:{value:["CRITICAL","Entered value $46,800.00 vs invoice total $64,868.40 (-$18,068.40). Impact: misdeclared value + duty delta.", "customs_entry p.1 · commercial_invoice p.1"], isf:["HIGH","ISF-10 element missing: Manufacturer. Impact: up to $5,000 liquidated damages.", "isf_filing p.1"]}},
+ {sid:"MSCU-5011", expo:0, flags:{}},
+ {sid:"TCLU-5015", expo:3193, flags:{hts:["CRITICAL","Entry HTS 6104.62.2011 (14.9%) vs invoice HTS 6109.10.0012 (16.5%). Impact: $2,342.97 duty-rate delta on entered value.", "commercial_invoice p.1 · isf_filing p.1 · customs_entry p.1"], weights:["MEDIUM","Packing list gross weight ~15% above B/L figure. Impact: $850 reweigh estimate.", "bill_of_lading p.1 · packing_list p.1"]}},
+ {sid:"CMAU-7913", expo:10250, flags:{origin:["CRITICAL","Certificate shows China; invoice, ISF and entry show South Korea. Impact: $4,500 exam + origin verification.", "certificate_of_origin p.1 · commercial_invoice p.1 · customs_entry p.1"], container:["HIGH","Arrival notice container number has transposed digits vs B/L. Impact: $1,250 misrelease/detention risk.", "bill_of_lading p.1 · arrival_notice p.1"]}},
+ {sid:"OOLU-8571", expo:3820, flags:{value:["CRITICAL","Entered value differs from stated invoice total by $1,010 (cascade of the invoice math error).", "commercial_invoice p.1 · customs_entry p.1"], math:["MEDIUM","Stated invoice total exceeds sum of line items by $1,010.00.", "commercial_invoice p.1"], party:["HIGH","Entry importer of record does not match B/L consignee.", "bill_of_lading p.1 · customs_entry p.1"]}},
+ {sid:"HLXU-2347", expo:1300, flags:{packages:["MEDIUM","Packing list carton count 36 short of B/L count. Impact: $950 tally/shortage claim.", "bill_of_lading p.1 · packing_list p.1"], vseal:["LOW","Arrival notice seal number differs from B/L seal. Impact: $350 seal verification.", "bill_of_lading p.1 · arrival_notice p.1"]}},
+ {sid:"TGHU-7401", expo:1000, flags:{weights:["MEDIUM","Packing list net weight (13,017.8 kg) exceeds its own gross weight (12,280.9 kg).", "packing_list p.1"], vseal:["LOW","Arrival notice vessel BREMEN EXPRESS vs B/L BREMEN EXPRESS II.", "bill_of_lading p.1 · arrival_notice p.1"]}},
+ {sid:"APZU-8397", expo:0, flags:{}},
+ {sid:"FCIU-8271", expo:0, flags:{}},
+ {sid:"TRLU-2770", expo:0, flags:{}},
+];
+
+const REPORTS = [
+ {sid:"MSKU-2847", hold:true, expo:"$23,068.40", items:[
+   ["fail","✖","CRITICAL — Entered value $18,068.40 below commercial invoice total"],
+   ["fail","✖","HIGH — ISF incomplete: Manufacturer element missing"],
+   ["pass","✓","HTS 8517.62.0090 coherent with goods (wireless routers)"],
+   ["pass","✓","Country of origin consistent (China) across 4 documents"]], approvable:true},
+ {sid:"CMAU-7913", hold:true, expo:"$10,250.00", items:[
+   ["fail","✖","CRITICAL — Country of origin: China (certificate) vs South Korea (invoice, entry)"],
+   ["fail","✖","HIGH — Container number transposed on arrival notice"],
+   ["pass","✓","ISF: all 10 importer data elements present"]]},
+ {sid:"OOLU-8571", hold:true, expo:"$3,820.00", items:[
+   ["fail","✖","CRITICAL — Entered value vs stated invoice total: -$1,010.00"],
+   ["fail","✖","HIGH — Importer of record ≠ B/L consignee"],
+   ["fail","✖","MEDIUM — Invoice line items do not sum to stated total"],
+   ["pass","✓","ISF complete · origin consistent (Colombia)"]]},
+ {sid:"TCLU-5015", hold:true, expo:"$3,192.97", items:[
+   ["fail","✖","CRITICAL — HTS differs: 6109.10.0012 (invoice) vs 6104.62.2011 (entry)"],
+   ["fail","✖","MEDIUM — Gross weight: packing list ~15% above B/L"],
+   ["pass","✓","ISF complete · origin consistent (Bangladesh)"]]},
+ {sid:"HLXU-2347", hold:true, expo:"$1,300.00", items:[
+   ["fail","✖","MEDIUM — Package count short by 36 cartons on packing list"],
+   ["fail","✖","LOW — Seal number mismatch on arrival notice"],
+   ["pass","✓","ISF complete · values reconcile · origin consistent"]]},
+ {sid:"TGHU-7401", hold:true, expo:"$1,000.00", items:[
+   ["fail","✖","MEDIUM — Net weight exceeds gross weight on packing list"],
+   ["fail","✖","LOW — Vessel name mismatch on arrival notice"],
+   ["pass","✓","ISF complete · values reconcile · origin consistent"]]},
+ {sid:"APZU-8397 · FCIU-8271 · MSCU-5011 · TRLU-2770", hold:false, expo:"$0.00", items:[
+   ["pass","✓","12/12 reconciliation checks consistent on all four packs"],
+   ["pass","✓","ISF complete · HTS coherent · origin consistent"],
+   ["warn","·","Awaiting human approval before filing proposal"]]},
+];
+
+const TRAIL0 = [
+ ["10:41:02","extract.pack","shipment=MSKU-2847 documents=8 fields=87"],
+ ["10:41:04","index.build","chunks=80 shipments=10 embeddings=local (no data leaves machine)"],
+ ["10:41:05","reconcile.flag","MSKU-2847 declared_value_vs_invoice_total CRITICAL impact=$18,068.40"],
+ ["10:41:05","compliance.fail","MSKU-2847 isf_completeness: Manufacturer missing"],
+ ["10:41:05","reconcile.pass","MSKU-2847 container_number_consistency docs=4"],
+ ["10:41:06","reconcile.flag","CMAU-7913 country_of_origin_consistency CRITICAL impact=$4,500.00"],
+ ["10:41:06","reconcile.flag","TCLU-5015 hts_consistency CRITICAL impact=$2,342.97"],
+ ["10:41:07","rag.answer","mode=offline citations=2 confidence=0.99"],
+ ["10:41:07","run.status","10 packs audited → PENDING_HUMAN_REVIEW (agent files nothing)"],
+];
+
+/* ---------- tabs ---------- */
+const tabs=[...document.querySelectorAll('.tab')];
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.setAttribute('aria-selected',x===t));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById('view-'+t.dataset.view).classList.add('on');
+}));
+
+/* ---------- chat ---------- */
+const log=document.getElementById('chatlog'), sug=document.getElementById('suggest');
+const qinput=document.getElementById('qinput');
+function answerHTML(item){
+  const cites=item.c.map(c=>`<span class="cite">[${c}]</span>`).join('');
+  return `${item.a}<div class="cites">${cites}</div>
+  <div class="confrow"><div class="confbar"><i style="width:${item.conf*100}%"></i></div>
+  <span class="conflbl">confidence ${item.conf.toFixed(2)}</span></div>`;
+}
+function play(item,btn){
+  const q=document.createElement('div'); q.className='msg q'; q.textContent=item.q; log.appendChild(q);
+  const a=document.createElement('div'); a.className='msg a'; a.innerHTML='<span class="conflbl">retrieving…</span>'; log.appendChild(a);
+  log.scrollTop=log.scrollHeight;
+  setTimeout(()=>{ a.innerHTML=answerHTML(item); log.scrollTop=log.scrollHeight; },420);
+  if(btn) btn.classList.add('used');
+}
+QA.forEach(item=>{
+  const b=document.createElement('button'); b.className='sugg'; b.textContent=item.q;
+  b.addEventListener('click',()=>play(item,b)); sug.appendChild(b);
+});
+function freeAsk(){
+  const t=qinput.value.trim(); if(!t) return;
+  qinput.value='';
+  const hit=QA.find(x=>x.q.toLowerCase().split(' ').filter(w=>w.length>4)
+    .filter(w=>t.toLowerCase().includes(w.replace(/[?',]/g,''))).length>=2);
+  if(hit){play({...hit,q:t});return;}
+  const q=document.createElement('div'); q.className='msg q'; q.textContent=t; log.appendChild(q);
+  const a=document.createElement('div'); a.className='msg a';
+  a.innerHTML='Static demo — this question isn\'t in the pre-computed set. The full agent answers free-form questions over the indexed packs (see repo). Try a suggested question →<div class="cites"><span class="cite">[demo limitation]</span></div>';
+  log.appendChild(a); log.scrollTop=log.scrollHeight;
+}
+document.getElementById('askbtn').addEventListener('click',freeAsk);
+qinput.addEventListener('keydown',e=>{if(e.key==='Enter')freeAsk();});
+
+/* ---------- matrix ---------- */
+const tbody=document.querySelector('#matrix tbody'), mdetail=document.getElementById('mdetail');
+MATRIX.forEach(r=>{
+  const tr=document.createElement('tr');
+  let cells=`<td class="sid">${r.sid}</td>`;
+  CHECKS.forEach(ch=>{
+    const f=r.flags[ch];
+    if(f){
+      cells+=`<td><button class="sev ${f[0]}" data-sid="${r.sid}" data-check="${ch}" title="${f[1]}">${f[0].slice(0,4)}</button></td>`;
+    } else cells+=`<td><span class="cell-ok">✓</span></td>`;
+  });
+  cells+=`<td class="expo ${r.expo?'bad':''}">${r.expo?'$'+r.expo.toLocaleString():'—'}</td>`;
+  tr.innerHTML=cells; tbody.appendChild(tr);
+});
+tbody.addEventListener('click',e=>{
+  const b=e.target.closest('.sev'); if(!b) return;
+  const row=MATRIX.find(r=>r.sid===b.dataset.sid); const f=row.flags[b.dataset.check];
+  mdetail.className='matrix-detail on';
+  mdetail.innerHTML=`<b>${b.dataset.sid}</b> — <span class="sev ${f[0]}">${f[0]}</span> &nbsp;${f[1]}
+    <div class="cites" style="margin-top:8px">${f[2].split(' · ').map(c=>`<span class="cite">[${c}]</span>`).join('')}</div>`;
+});
+
+/* ---------- compliance report ---------- */
+const cards=document.getElementById('cards'), trail=document.getElementById('trail');
+function trailAdd(ts,act,msg,human){
+  const d=document.createElement('div');
+  d.innerHTML=`<span class="${human?'hum':'act'}">${ts} ${act}</span> ${msg}`;
+  trail.appendChild(d); trail.scrollTop=trail.scrollHeight;
+}
+TRAIL0.forEach(t=>trailAdd(t[0],t[1],t[2]));
+REPORTS.forEach(rep=>{
+  const card=document.createElement('div'); card.className='card';
+  const items=rep.items.map(i=>`<div class="citem ${i[0]}"><span class="ic">${i[1]}</span><span class="t">${i[2]}</span></div>`).join('');
+  const approve=rep.approvable?`
+    <div class="approve-row">
+      <input type="text" placeholder="Reviewer name" aria-label="Reviewer name" id="rev-${rep.sid}">
+      <button class="btn btn-sm btn-ghost" data-approve="${rep.sid}">Approve</button>
+    </div>`:``;
+  card.innerHTML=`
+    <div class="card-head"><span class="sid">${rep.sid}</span>
+      <span class="pill ${rep.hold?'hold':'clear'}" id="pill-${rep.sid}">${rep.hold?'HOLD — PENDING HUMAN REVIEW':'CLEAR — PENDING HUMAN REVIEW'}</span></div>
+    <div class="card-body">${items}</div>
+    <div class="card-foot"><span>est. exposure <span class="expo ${rep.expo!=='$0.00'?'bad':''}">${rep.expo}</span></span>${approve}</div>`;
+  cards.appendChild(card);
+});
+cards.addEventListener('click',e=>{
+  const b=e.target.closest('[data-approve]'); if(!b) return;
+  const sid=b.dataset.approve;
+  const name=document.getElementById('rev-'+sid).value.trim();
+  if(!name){ document.getElementById('rev-'+sid).placeholder='name required — no auto-approve'; return; }
+  const pill=document.getElementById('pill-'+sid);
+  pill.className='pill approved'; pill.textContent='APPROVED_BY_HUMAN';
+  b.closest('.approve-row').innerHTML=`<span style="color:var(--green)">signed: ${name}</span>`;
+  const ts=new Date().toTimeString().slice(0,8);
+  trailAdd(ts,'governance.human_approval',`shipment=${sid} reviewer="${name}" — recorded in trace.jsonl`,true);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2116 @@
+{
+  "seed": 2026,
+  "note": "All data synthetic.",
+  "shipments": [
+    {
+      "shipment_id": "MSKU-2847",
+      "clean": false,
+      "canonical": {
+        "bl_number": "MGF86848884",
+        "container_number": "MSKU2847617",
+        "seal_number": "SL9236009",
+        "vessel": "MSC ALTAIR VII",
+        "voyage": "426A",
+        "port_of_loading": "YANTIAN, CN",
+        "port_of_discharge": "MIAMI, FL, US",
+        "etd": "2026-05-15",
+        "eta": "2026-06-27",
+        "shipper_name": "SHENZHEN NETCORE ELECTRONICS CO LTD",
+        "shipper_address": "12F Huaqiang Tower, Futian District, Shenzhen, Guangdong, CN",
+        "consignee_name": "SUNBELT TRADING GROUP LLC",
+        "consignee_address": "2110 NW 82ND AVE, DORAL, FL 33122",
+        "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+        "goods_description": "Wireless network routers, 802.11ax",
+        "hts_code": "8517.62.0090",
+        "duty_rate": 0.0,
+        "country_of_origin": "China",
+        "package_count": 1392,
+        "package_type": "CARTONS",
+        "gross_weight_kg": 20667.2,
+        "net_weight_kg": 18957.1,
+        "volume_cbm": 60.95,
+        "invoice_number": "CI-2026-8226",
+        "invoice_total": 64868.4,
+        "currency": "USD",
+        "incoterm": "FOB Yantian",
+        "line_items": [
+          {
+            "description": "Wireless network routers, 802.11ax",
+            "qty": 1200,
+            "unit_price": 42.5,
+            "amount": 51000.0
+          },
+          {
+            "description": "Wireless network routers, 802.11ax (spare/accessory units)",
+            "qty": 508,
+            "unit_price": 27.3,
+            "amount": 13868.4
+          }
+        ],
+        "entry_number": "ABI-42203407-0",
+        "declared_value": 64868.4,
+        "importer_of_record": "SUNBELT TRADING GROUP LLC",
+        "manufacturer_name": "SHENZHEN NETCORE ELECTRONICS CO LTD",
+        "manufacturer_address": "12F Huaqiang Tower, Futian District, Shenzhen, Guangdong, CN",
+        "stuffing_location": "12F Huaqiang Tower, Futian District, Shenzhen, Guangdong, CN",
+        "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+        "bond_type": "CONTINUOUS (TYPE 8)",
+        "isf_transaction": "ISF759496827",
+        "firms_code": "F182",
+        "it_number": "V2857850"
+      },
+      "documents": {
+        "bill_of_lading": {
+          "file": "shipments/MSKU-2847/01_bill_of_lading.pdf",
+          "fields": {
+            "bl_number": "MGF86848884",
+            "shipper_name": "SHENZHEN NETCORE ELECTRONICS CO LTD",
+            "shipper_address": "12F Huaqiang Tower, Futian District, Shenzhen, Guangdong, CN",
+            "consignee_name": "SUNBELT TRADING GROUP LLC",
+            "consignee_address": "2110 NW 82ND AVE, DORAL, FL 33122",
+            "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+            "vessel": "MSC ALTAIR VII",
+            "voyage": "426A",
+            "port_of_loading": "YANTIAN, CN",
+            "port_of_discharge": "MIAMI, FL, US",
+            "etd": "2026-05-15",
+            "container_number": "MSKU2847617",
+            "seal_number": "SL9236009",
+            "package_count": 1392,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 20667.2,
+            "volume_cbm": 60.95,
+            "goods_description": "Wireless network routers, 802.11ax"
+          }
+        },
+        "commercial_invoice": {
+          "file": "shipments/MSKU-2847/02_commercial_invoice.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-8226",
+            "shipper_name": "SHENZHEN NETCORE ELECTRONICS CO LTD",
+            "shipper_address": "12F Huaqiang Tower, Futian District, Shenzhen, Guangdong, CN",
+            "consignee_name": "SUNBELT TRADING GROUP LLC",
+            "consignee_address": "2110 NW 82ND AVE, DORAL, FL 33122",
+            "incoterm": "FOB Yantian",
+            "currency": "USD",
+            "country_of_origin": "China",
+            "hts_code": "8517.62.0090",
+            "goods_description": "Wireless network routers, 802.11ax",
+            "invoice_total": 64868.4
+          },
+          "line_items": [
+            {
+              "description": "Wireless network routers, 802.11ax",
+              "qty": 1200,
+              "unit_price": 42.5,
+              "amount": 51000.0
+            },
+            {
+              "description": "Wireless network routers, 802.11ax (spare/accessory units)",
+              "qty": 508,
+              "unit_price": 27.3,
+              "amount": 13868.4
+            }
+          ]
+        },
+        "packing_list": {
+          "file": "shipments/MSKU-2847/03_packing_list.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-8226",
+            "container_number": "MSKU2847617",
+            "package_count": 1392,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 20667.2,
+            "net_weight_kg": 18957.1,
+            "volume_cbm": 60.95,
+            "goods_description": "Wireless network routers, 802.11ax"
+          }
+        },
+        "certificate_of_origin": {
+          "file": "shipments/MSKU-2847/04_certificate_of_origin.pdf",
+          "fields": {
+            "shipper_name": "SHENZHEN NETCORE ELECTRONICS CO LTD",
+            "shipper_address": "12F Huaqiang Tower, Futian District, Shenzhen, Guangdong, CN",
+            "consignee_name": "SUNBELT TRADING GROUP LLC",
+            "consignee_address": "2110 NW 82ND AVE, DORAL, FL 33122",
+            "country_of_origin": "China",
+            "goods_description": "Wireless network routers, 802.11ax",
+            "invoice_number": "CI-2026-8226",
+            "package_count": 1392
+          }
+        },
+        "isf_filing": {
+          "file": "shipments/MSKU-2847/05_isf_filing.pdf",
+          "fields": {
+            "isf_transaction": "ISF759496827",
+            "bl_number": "MGF86848884",
+            "importer_of_record": "SUNBELT TRADING GROUP LLC",
+            "consignee_name": "SUNBELT TRADING GROUP LLC",
+            "shipper_name": "SHENZHEN NETCORE ELECTRONICS CO LTD",
+            "manufacturer_name": "",
+            "manufacturer_address": "12F Huaqiang Tower, Futian District, Shenzhen, Guangdong, CN",
+            "country_of_origin": "China",
+            "hts_code": "8517.62.0090",
+            "stuffing_location": "12F Huaqiang Tower, Futian District, Shenzhen, Guangdong, CN",
+            "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+            "bond_type": "CONTINUOUS (TYPE 8)"
+          }
+        },
+        "customs_entry": {
+          "file": "shipments/MSKU-2847/06_customs_entry.pdf",
+          "fields": {
+            "entry_number": "ABI-42203407-0",
+            "importer_of_record": "SUNBELT TRADING GROUP LLC",
+            "bl_number": "MGF86848884",
+            "hts_code": "8517.62.0090",
+            "goods_description": "Wireless network routers, 802.11ax",
+            "country_of_origin": "China",
+            "declared_value": 46800.0,
+            "duty_rate": 0.0,
+            "vessel": "MSC ALTAIR VII",
+            "port_of_discharge": "MIAMI, FL, US",
+            "eta": "2026-06-27"
+          }
+        },
+        "arrival_notice": {
+          "file": "shipments/MSKU-2847/07_arrival_notice.pdf",
+          "fields": {
+            "bl_number": "MGF86848884",
+            "container_number": "MSKU2847617",
+            "seal_number": "SL9236009",
+            "vessel": "MSC ALTAIR VII",
+            "voyage": "426A",
+            "eta": "2026-06-27",
+            "port_of_discharge": "MIAMI, FL, US",
+            "consignee_name": "SUNBELT TRADING GROUP LLC",
+            "package_count": 1392,
+            "gross_weight_kg": 20667.2,
+            "firms_code": "F182",
+            "it_number": "V2857850"
+          }
+        },
+        "delivery_order": {
+          "file": "shipments/MSKU-2847/08_delivery_order.pdf",
+          "fields": {
+            "bl_number": "MGF86848884",
+            "container_number": "MSKU2847617",
+            "consignee_name": "SUNBELT TRADING GROUP LLC",
+            "consignee_address": "2110 NW 82ND AVE, DORAL, FL 33122",
+            "firms_code": "F182",
+            "it_number": "V2857850",
+            "package_count": 1392
+          }
+        }
+      },
+      "injected_discrepancies": [
+        {
+          "check": "declared_value_vs_invoice_total",
+          "doc": "customs_entry",
+          "field": "declared_value",
+          "severity": "CRITICAL",
+          "note": "Entry declares $46,800.00 against a $64,868.40 commercial invoice (-$18,068.40)."
+        },
+        {
+          "check": "isf_completeness",
+          "doc": "isf_filing",
+          "field": "manufacturer_name",
+          "severity": "HIGH",
+          "note": "ISF filed with manufacturer name blank (ISF-10 element missing)."
+        }
+      ]
+    },
+    {
+      "shipment_id": "MSCU-5011",
+      "clean": true,
+      "canonical": {
+        "bl_number": "MGF60512102",
+        "container_number": "MSCU5011935",
+        "seal_number": "SL9616569",
+        "vessel": "EVER LUCENT",
+        "voyage": "1142E",
+        "port_of_loading": "HO CHI MINH (CAT LAI), VN",
+        "port_of_discharge": "MIAMI, FL, US",
+        "etd": "2026-03-13",
+        "eta": "2026-04-27",
+        "shipper_name": "BINH DUONG FURNITURE MFG JSC",
+        "shipper_address": "Lot C4, VSIP II Industrial Park, Binh Duong, VN",
+        "consignee_name": "GULFSTREAM HOME & LIVING INC",
+        "consignee_address": "4500 OAKES RD, DAVIE, FL 33314",
+        "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+        "goods_description": "Upholstered dining chairs, wooden frame",
+        "hts_code": "9401.61.4011",
+        "duty_rate": 0.0,
+        "country_of_origin": "Vietnam",
+        "package_count": 635,
+        "package_type": "CARTONS",
+        "gross_weight_kg": 15927.7,
+        "net_weight_kg": 14251.0,
+        "volume_cbm": 28.09,
+        "invoice_number": "CI-2026-2250",
+        "invoice_total": 357926.67,
+        "currency": "USD",
+        "incoterm": "FOB Ho Chi Minh (Cat Lai)",
+        "line_items": [
+          {
+            "description": "Upholstered dining chairs, wooden frame",
+            "qty": 1921,
+            "unit_price": 180.33,
+            "amount": 346413.93
+          },
+          {
+            "description": "Upholstered dining chairs, wooden frame (spare/accessory units)",
+            "qty": 51,
+            "unit_price": 225.74,
+            "amount": 11512.74
+          }
+        ],
+        "entry_number": "ABI-55686986-1",
+        "declared_value": 357926.67,
+        "importer_of_record": "GULFSTREAM HOME & LIVING INC",
+        "manufacturer_name": "BINH DUONG FURNITURE MFG JSC",
+        "manufacturer_address": "Lot C4, VSIP II Industrial Park, Binh Duong, VN",
+        "stuffing_location": "Lot C4, VSIP II Industrial Park, Binh Duong, VN",
+        "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+        "bond_type": "CONTINUOUS (TYPE 8)",
+        "isf_transaction": "ISF698557955",
+        "firms_code": "F650",
+        "it_number": "V5900991"
+      },
+      "documents": {
+        "bill_of_lading": {
+          "file": "shipments/MSCU-5011/01_bill_of_lading.pdf",
+          "fields": {
+            "bl_number": "MGF60512102",
+            "shipper_name": "BINH DUONG FURNITURE MFG JSC",
+            "shipper_address": "Lot C4, VSIP II Industrial Park, Binh Duong, VN",
+            "consignee_name": "GULFSTREAM HOME & LIVING INC",
+            "consignee_address": "4500 OAKES RD, DAVIE, FL 33314",
+            "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+            "vessel": "EVER LUCENT",
+            "voyage": "1142E",
+            "port_of_loading": "HO CHI MINH (CAT LAI), VN",
+            "port_of_discharge": "MIAMI, FL, US",
+            "etd": "2026-03-13",
+            "container_number": "MSCU5011935",
+            "seal_number": "SL9616569",
+            "package_count": 635,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 15927.7,
+            "volume_cbm": 28.09,
+            "goods_description": "Upholstered dining chairs, wooden frame"
+          }
+        },
+        "commercial_invoice": {
+          "file": "shipments/MSCU-5011/02_commercial_invoice.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-2250",
+            "shipper_name": "BINH DUONG FURNITURE MFG JSC",
+            "shipper_address": "Lot C4, VSIP II Industrial Park, Binh Duong, VN",
+            "consignee_name": "GULFSTREAM HOME & LIVING INC",
+            "consignee_address": "4500 OAKES RD, DAVIE, FL 33314",
+            "incoterm": "FOB Ho Chi Minh (Cat Lai)",
+            "currency": "USD",
+            "country_of_origin": "Vietnam",
+            "hts_code": "9401.61.4011",
+            "goods_description": "Upholstered dining chairs, wooden frame",
+            "invoice_total": 357926.67
+          },
+          "line_items": [
+            {
+              "description": "Upholstered dining chairs, wooden frame",
+              "qty": 1921,
+              "unit_price": 180.33,
+              "amount": 346413.93
+            },
+            {
+              "description": "Upholstered dining chairs, wooden frame (spare/accessory units)",
+              "qty": 51,
+              "unit_price": 225.74,
+              "amount": 11512.74
+            }
+          ]
+        },
+        "packing_list": {
+          "file": "shipments/MSCU-5011/03_packing_list.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-2250",
+            "container_number": "MSCU5011935",
+            "package_count": 635,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 15927.7,
+            "net_weight_kg": 14251.0,
+            "volume_cbm": 28.09,
+            "goods_description": "Upholstered dining chairs, wooden frame"
+          }
+        },
+        "certificate_of_origin": {
+          "file": "shipments/MSCU-5011/04_certificate_of_origin.pdf",
+          "fields": {
+            "shipper_name": "BINH DUONG FURNITURE MFG JSC",
+            "shipper_address": "Lot C4, VSIP II Industrial Park, Binh Duong, VN",
+            "consignee_name": "GULFSTREAM HOME & LIVING INC",
+            "consignee_address": "4500 OAKES RD, DAVIE, FL 33314",
+            "country_of_origin": "Vietnam",
+            "goods_description": "Upholstered dining chairs, wooden frame",
+            "invoice_number": "CI-2026-2250",
+            "package_count": 635
+          }
+        },
+        "isf_filing": {
+          "file": "shipments/MSCU-5011/05_isf_filing.pdf",
+          "fields": {
+            "isf_transaction": "ISF698557955",
+            "bl_number": "MGF60512102",
+            "importer_of_record": "GULFSTREAM HOME & LIVING INC",
+            "consignee_name": "GULFSTREAM HOME & LIVING INC",
+            "shipper_name": "BINH DUONG FURNITURE MFG JSC",
+            "manufacturer_name": "BINH DUONG FURNITURE MFG JSC",
+            "manufacturer_address": "Lot C4, VSIP II Industrial Park, Binh Duong, VN",
+            "country_of_origin": "Vietnam",
+            "hts_code": "9401.61.4011",
+            "stuffing_location": "Lot C4, VSIP II Industrial Park, Binh Duong, VN",
+            "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+            "bond_type": "CONTINUOUS (TYPE 8)"
+          }
+        },
+        "customs_entry": {
+          "file": "shipments/MSCU-5011/06_customs_entry.pdf",
+          "fields": {
+            "entry_number": "ABI-55686986-1",
+            "importer_of_record": "GULFSTREAM HOME & LIVING INC",
+            "bl_number": "MGF60512102",
+            "hts_code": "9401.61.4011",
+            "goods_description": "Upholstered dining chairs, wooden frame",
+            "country_of_origin": "Vietnam",
+            "declared_value": 357926.67,
+            "duty_rate": 0.0,
+            "vessel": "EVER LUCENT",
+            "port_of_discharge": "MIAMI, FL, US",
+            "eta": "2026-04-27"
+          }
+        },
+        "arrival_notice": {
+          "file": "shipments/MSCU-5011/07_arrival_notice.pdf",
+          "fields": {
+            "bl_number": "MGF60512102",
+            "container_number": "MSCU5011935",
+            "seal_number": "SL9616569",
+            "vessel": "EVER LUCENT",
+            "voyage": "1142E",
+            "eta": "2026-04-27",
+            "port_of_discharge": "MIAMI, FL, US",
+            "consignee_name": "GULFSTREAM HOME & LIVING INC",
+            "package_count": 635,
+            "gross_weight_kg": 15927.7,
+            "firms_code": "F650",
+            "it_number": "V5900991"
+          }
+        },
+        "delivery_order": {
+          "file": "shipments/MSCU-5011/08_delivery_order.pdf",
+          "fields": {
+            "bl_number": "MGF60512102",
+            "container_number": "MSCU5011935",
+            "consignee_name": "GULFSTREAM HOME & LIVING INC",
+            "consignee_address": "4500 OAKES RD, DAVIE, FL 33314",
+            "firms_code": "F650",
+            "it_number": "V5900991",
+            "package_count": 635
+          }
+        }
+      },
+      "injected_discrepancies": []
+    },
+    {
+      "shipment_id": "TCLU-5015",
+      "clean": false,
+      "canonical": {
+        "bl_number": "MGF67102035",
+        "container_number": "TCLU5015721",
+        "seal_number": "SL9495290",
+        "vessel": "CMA CGM ALMAVIVA",
+        "voyage": "0FL8W",
+        "port_of_loading": "CHITTAGONG, BD",
+        "port_of_discharge": "MIAMI, FL, US",
+        "etd": "2026-05-17",
+        "eta": "2026-06-05",
+        "shipper_name": "DHAKA APPAREL WORKS LTD",
+        "shipper_address": "Plot 114, DEPZ, Savar, Dhaka, BD",
+        "consignee_name": "BISCAYNE APPAREL DISTRIBUTORS",
+        "consignee_address": "7801 NW 37TH ST, MIAMI, FL 33166",
+        "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+        "goods_description": "Men's cotton knit t-shirts",
+        "hts_code": "6109.10.0012",
+        "duty_rate": 0.165,
+        "country_of_origin": "Bangladesh",
+        "package_count": 1319,
+        "package_type": "CARTONS",
+        "gross_weight_kg": 10328.5,
+        "net_weight_kg": 8993.2,
+        "volume_cbm": 22.35,
+        "invoice_number": "CI-2026-9045",
+        "invoice_total": 146435.85,
+        "currency": "USD",
+        "incoterm": "FOB Chittagong",
+        "line_items": [
+          {
+            "description": "Men's cotton knit t-shirts",
+            "qty": 1345,
+            "unit_price": 102.54,
+            "amount": 137916.3
+          },
+          {
+            "description": "Men's cotton knit t-shirts (spare/accessory units)",
+            "qty": 65,
+            "unit_price": 131.07,
+            "amount": 8519.55
+          }
+        ],
+        "entry_number": "ABI-63438575-8",
+        "declared_value": 146435.85,
+        "importer_of_record": "BISCAYNE APPAREL DISTRIBUTORS",
+        "manufacturer_name": "DHAKA APPAREL WORKS LTD",
+        "manufacturer_address": "Plot 114, DEPZ, Savar, Dhaka, BD",
+        "stuffing_location": "Plot 114, DEPZ, Savar, Dhaka, BD",
+        "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+        "bond_type": "CONTINUOUS (TYPE 8)",
+        "isf_transaction": "ISF377716265",
+        "firms_code": "F964",
+        "it_number": "V8045862"
+      },
+      "documents": {
+        "bill_of_lading": {
+          "file": "shipments/TCLU-5015/01_bill_of_lading.pdf",
+          "fields": {
+            "bl_number": "MGF67102035",
+            "shipper_name": "DHAKA APPAREL WORKS LTD",
+            "shipper_address": "Plot 114, DEPZ, Savar, Dhaka, BD",
+            "consignee_name": "BISCAYNE APPAREL DISTRIBUTORS",
+            "consignee_address": "7801 NW 37TH ST, MIAMI, FL 33166",
+            "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+            "vessel": "CMA CGM ALMAVIVA",
+            "voyage": "0FL8W",
+            "port_of_loading": "CHITTAGONG, BD",
+            "port_of_discharge": "MIAMI, FL, US",
+            "etd": "2026-05-17",
+            "container_number": "TCLU5015721",
+            "seal_number": "SL9495290",
+            "package_count": 1319,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 10328.5,
+            "volume_cbm": 22.35,
+            "goods_description": "Men's cotton knit t-shirts"
+          }
+        },
+        "commercial_invoice": {
+          "file": "shipments/TCLU-5015/02_commercial_invoice.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-9045",
+            "shipper_name": "DHAKA APPAREL WORKS LTD",
+            "shipper_address": "Plot 114, DEPZ, Savar, Dhaka, BD",
+            "consignee_name": "BISCAYNE APPAREL DISTRIBUTORS",
+            "consignee_address": "7801 NW 37TH ST, MIAMI, FL 33166",
+            "incoterm": "FOB Chittagong",
+            "currency": "USD",
+            "country_of_origin": "Bangladesh",
+            "hts_code": "6109.10.0012",
+            "goods_description": "Men's cotton knit t-shirts",
+            "invoice_total": 146435.85
+          },
+          "line_items": [
+            {
+              "description": "Men's cotton knit t-shirts",
+              "qty": 1345,
+              "unit_price": 102.54,
+              "amount": 137916.3
+            },
+            {
+              "description": "Men's cotton knit t-shirts (spare/accessory units)",
+              "qty": 65,
+              "unit_price": 131.07,
+              "amount": 8519.55
+            }
+          ]
+        },
+        "packing_list": {
+          "file": "shipments/TCLU-5015/03_packing_list.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-9045",
+            "container_number": "TCLU5015721",
+            "package_count": 1319,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 11867.4,
+            "net_weight_kg": 8993.2,
+            "volume_cbm": 22.35,
+            "goods_description": "Men's cotton knit t-shirts"
+          }
+        },
+        "certificate_of_origin": {
+          "file": "shipments/TCLU-5015/04_certificate_of_origin.pdf",
+          "fields": {
+            "shipper_name": "DHAKA APPAREL WORKS LTD",
+            "shipper_address": "Plot 114, DEPZ, Savar, Dhaka, BD",
+            "consignee_name": "BISCAYNE APPAREL DISTRIBUTORS",
+            "consignee_address": "7801 NW 37TH ST, MIAMI, FL 33166",
+            "country_of_origin": "Bangladesh",
+            "goods_description": "Men's cotton knit t-shirts",
+            "invoice_number": "CI-2026-9045",
+            "package_count": 1319
+          }
+        },
+        "isf_filing": {
+          "file": "shipments/TCLU-5015/05_isf_filing.pdf",
+          "fields": {
+            "isf_transaction": "ISF377716265",
+            "bl_number": "MGF67102035",
+            "importer_of_record": "BISCAYNE APPAREL DISTRIBUTORS",
+            "consignee_name": "BISCAYNE APPAREL DISTRIBUTORS",
+            "shipper_name": "DHAKA APPAREL WORKS LTD",
+            "manufacturer_name": "DHAKA APPAREL WORKS LTD",
+            "manufacturer_address": "Plot 114, DEPZ, Savar, Dhaka, BD",
+            "country_of_origin": "Bangladesh",
+            "hts_code": "6109.10.0012",
+            "stuffing_location": "Plot 114, DEPZ, Savar, Dhaka, BD",
+            "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+            "bond_type": "CONTINUOUS (TYPE 8)"
+          }
+        },
+        "customs_entry": {
+          "file": "shipments/TCLU-5015/06_customs_entry.pdf",
+          "fields": {
+            "entry_number": "ABI-63438575-8",
+            "importer_of_record": "BISCAYNE APPAREL DISTRIBUTORS",
+            "bl_number": "MGF67102035",
+            "hts_code": "6104.62.2011",
+            "goods_description": "Men's cotton knit t-shirts",
+            "country_of_origin": "Bangladesh",
+            "declared_value": 146435.85,
+            "duty_rate": 0.165,
+            "vessel": "CMA CGM ALMAVIVA",
+            "port_of_discharge": "MIAMI, FL, US",
+            "eta": "2026-06-05"
+          }
+        },
+        "arrival_notice": {
+          "file": "shipments/TCLU-5015/07_arrival_notice.pdf",
+          "fields": {
+            "bl_number": "MGF67102035",
+            "container_number": "TCLU5015721",
+            "seal_number": "SL9495290",
+            "vessel": "CMA CGM ALMAVIVA",
+            "voyage": "0FL8W",
+            "eta": "2026-06-05",
+            "port_of_discharge": "MIAMI, FL, US",
+            "consignee_name": "BISCAYNE APPAREL DISTRIBUTORS",
+            "package_count": 1319,
+            "gross_weight_kg": 10328.5,
+            "firms_code": "F964",
+            "it_number": "V8045862"
+          }
+        },
+        "delivery_order": {
+          "file": "shipments/TCLU-5015/08_delivery_order.pdf",
+          "fields": {
+            "bl_number": "MGF67102035",
+            "container_number": "TCLU5015721",
+            "consignee_name": "BISCAYNE APPAREL DISTRIBUTORS",
+            "consignee_address": "7801 NW 37TH ST, MIAMI, FL 33166",
+            "firms_code": "F964",
+            "it_number": "V8045862",
+            "package_count": 1319
+          }
+        }
+      },
+      "injected_discrepancies": [
+        {
+          "check": "hts_consistency",
+          "doc": "customs_entry",
+          "field": "hts_code",
+          "severity": "CRITICAL",
+          "note": "Entry HTS (6104.62, 14.9%) differs from invoice HTS (6109.10, 16.5%) \u2014 duty underpayment."
+        },
+        {
+          "check": "gross_weight_consistency",
+          "doc": "packing_list",
+          "field": "gross_weight_kg",
+          "severity": "MEDIUM",
+          "note": "Packing list gross weight ~15% above B/L weight."
+        }
+      ]
+    },
+    {
+      "shipment_id": "CMAU-7913",
+      "clean": false,
+      "canonical": {
+        "bl_number": "MGF93524993",
+        "container_number": "CMAU7913963",
+        "seal_number": "SL8204296",
+        "vessel": "MAERSK KOWLOON",
+        "voyage": "618N",
+        "port_of_loading": "BUSAN, KR",
+        "port_of_discharge": "MIAMI, FL, US",
+        "etd": "2026-05-23",
+        "eta": "2026-06-05",
+        "shipper_name": "BUSAN AUTOPARTS INDUSTRIAL CO",
+        "shipper_address": "88 Noksan Sandan-ro, Gangseo-gu, Busan, KR",
+        "consignee_name": "EVERGLADES AUTOMOTIVE SUPPLY CO",
+        "consignee_address": "1290 SW 30TH AVE, POMPANO BEACH, FL 33069",
+        "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+        "goods_description": "Brake pads, disc, for passenger vehicles",
+        "hts_code": "8708.30.5090",
+        "duty_rate": 0.025,
+        "country_of_origin": "South Korea",
+        "package_count": 220,
+        "package_type": "CARTONS",
+        "gross_weight_kg": 4249.2,
+        "net_weight_kg": 3589.3,
+        "volume_cbm": 24.19,
+        "invoice_number": "CI-2026-8701",
+        "invoice_total": 533567.31,
+        "currency": "USD",
+        "incoterm": "FOB Busan",
+        "line_items": [
+          {
+            "description": "Brake pads, disc, for passenger vehicles",
+            "qty": 2042,
+            "unit_price": 204.03,
+            "amount": 416629.26
+          },
+          {
+            "description": "Brake pads, disc, for passenger vehicles (spare/accessory units)",
+            "qty": 565,
+            "unit_price": 206.97,
+            "amount": 116938.05
+          }
+        ],
+        "entry_number": "ABI-29114289-7",
+        "declared_value": 533567.31,
+        "importer_of_record": "EVERGLADES AUTOMOTIVE SUPPLY CO",
+        "manufacturer_name": "BUSAN AUTOPARTS INDUSTRIAL CO",
+        "manufacturer_address": "88 Noksan Sandan-ro, Gangseo-gu, Busan, KR",
+        "stuffing_location": "88 Noksan Sandan-ro, Gangseo-gu, Busan, KR",
+        "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+        "bond_type": "CONTINUOUS (TYPE 8)",
+        "isf_transaction": "ISF345808782",
+        "firms_code": "F970",
+        "it_number": "V3047042"
+      },
+      "documents": {
+        "bill_of_lading": {
+          "file": "shipments/CMAU-7913/01_bill_of_lading.pdf",
+          "fields": {
+            "bl_number": "MGF93524993",
+            "shipper_name": "BUSAN AUTOPARTS INDUSTRIAL CO",
+            "shipper_address": "88 Noksan Sandan-ro, Gangseo-gu, Busan, KR",
+            "consignee_name": "EVERGLADES AUTOMOTIVE SUPPLY CO",
+            "consignee_address": "1290 SW 30TH AVE, POMPANO BEACH, FL 33069",
+            "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+            "vessel": "MAERSK KOWLOON",
+            "voyage": "618N",
+            "port_of_loading": "BUSAN, KR",
+            "port_of_discharge": "MIAMI, FL, US",
+            "etd": "2026-05-23",
+            "container_number": "CMAU7913963",
+            "seal_number": "SL8204296",
+            "package_count": 220,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 4249.2,
+            "volume_cbm": 24.19,
+            "goods_description": "Brake pads, disc, for passenger vehicles"
+          }
+        },
+        "commercial_invoice": {
+          "file": "shipments/CMAU-7913/02_commercial_invoice.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-8701",
+            "shipper_name": "BUSAN AUTOPARTS INDUSTRIAL CO",
+            "shipper_address": "88 Noksan Sandan-ro, Gangseo-gu, Busan, KR",
+            "consignee_name": "EVERGLADES AUTOMOTIVE SUPPLY CO",
+            "consignee_address": "1290 SW 30TH AVE, POMPANO BEACH, FL 33069",
+            "incoterm": "FOB Busan",
+            "currency": "USD",
+            "country_of_origin": "South Korea",
+            "hts_code": "8708.30.5090",
+            "goods_description": "Brake pads, disc, for passenger vehicles",
+            "invoice_total": 533567.31
+          },
+          "line_items": [
+            {
+              "description": "Brake pads, disc, for passenger vehicles",
+              "qty": 2042,
+              "unit_price": 204.03,
+              "amount": 416629.26
+            },
+            {
+              "description": "Brake pads, disc, for passenger vehicles (spare/accessory units)",
+              "qty": 565,
+              "unit_price": 206.97,
+              "amount": 116938.05
+            }
+          ]
+        },
+        "packing_list": {
+          "file": "shipments/CMAU-7913/03_packing_list.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-8701",
+            "container_number": "CMAU7913963",
+            "package_count": 220,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 4249.2,
+            "net_weight_kg": 3589.3,
+            "volume_cbm": 24.19,
+            "goods_description": "Brake pads, disc, for passenger vehicles"
+          }
+        },
+        "certificate_of_origin": {
+          "file": "shipments/CMAU-7913/04_certificate_of_origin.pdf",
+          "fields": {
+            "shipper_name": "BUSAN AUTOPARTS INDUSTRIAL CO",
+            "shipper_address": "88 Noksan Sandan-ro, Gangseo-gu, Busan, KR",
+            "consignee_name": "EVERGLADES AUTOMOTIVE SUPPLY CO",
+            "consignee_address": "1290 SW 30TH AVE, POMPANO BEACH, FL 33069",
+            "country_of_origin": "China",
+            "goods_description": "Brake pads, disc, for passenger vehicles",
+            "invoice_number": "CI-2026-8701",
+            "package_count": 220
+          }
+        },
+        "isf_filing": {
+          "file": "shipments/CMAU-7913/05_isf_filing.pdf",
+          "fields": {
+            "isf_transaction": "ISF345808782",
+            "bl_number": "MGF93524993",
+            "importer_of_record": "EVERGLADES AUTOMOTIVE SUPPLY CO",
+            "consignee_name": "EVERGLADES AUTOMOTIVE SUPPLY CO",
+            "shipper_name": "BUSAN AUTOPARTS INDUSTRIAL CO",
+            "manufacturer_name": "BUSAN AUTOPARTS INDUSTRIAL CO",
+            "manufacturer_address": "88 Noksan Sandan-ro, Gangseo-gu, Busan, KR",
+            "country_of_origin": "South Korea",
+            "hts_code": "8708.30.5090",
+            "stuffing_location": "88 Noksan Sandan-ro, Gangseo-gu, Busan, KR",
+            "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+            "bond_type": "CONTINUOUS (TYPE 8)"
+          }
+        },
+        "customs_entry": {
+          "file": "shipments/CMAU-7913/06_customs_entry.pdf",
+          "fields": {
+            "entry_number": "ABI-29114289-7",
+            "importer_of_record": "EVERGLADES AUTOMOTIVE SUPPLY CO",
+            "bl_number": "MGF93524993",
+            "hts_code": "8708.30.5090",
+            "goods_description": "Brake pads, disc, for passenger vehicles",
+            "country_of_origin": "South Korea",
+            "declared_value": 533567.31,
+            "duty_rate": 0.025,
+            "vessel": "MAERSK KOWLOON",
+            "port_of_discharge": "MIAMI, FL, US",
+            "eta": "2026-06-05"
+          }
+        },
+        "arrival_notice": {
+          "file": "shipments/CMAU-7913/07_arrival_notice.pdf",
+          "fields": {
+            "bl_number": "MGF93524993",
+            "container_number": "CMAU7989963",
+            "seal_number": "SL8204296",
+            "vessel": "MAERSK KOWLOON",
+            "voyage": "618N",
+            "eta": "2026-06-05",
+            "port_of_discharge": "MIAMI, FL, US",
+            "consignee_name": "EVERGLADES AUTOMOTIVE SUPPLY CO",
+            "package_count": 220,
+            "gross_weight_kg": 4249.2,
+            "firms_code": "F970",
+            "it_number": "V3047042"
+          }
+        },
+        "delivery_order": {
+          "file": "shipments/CMAU-7913/08_delivery_order.pdf",
+          "fields": {
+            "bl_number": "MGF93524993",
+            "container_number": "CMAU7913963",
+            "consignee_name": "EVERGLADES AUTOMOTIVE SUPPLY CO",
+            "consignee_address": "1290 SW 30TH AVE, POMPANO BEACH, FL 33069",
+            "firms_code": "F970",
+            "it_number": "V3047042",
+            "package_count": 220
+          }
+        }
+      },
+      "injected_discrepancies": [
+        {
+          "check": "country_of_origin_consistency",
+          "doc": "certificate_of_origin",
+          "field": "country_of_origin",
+          "severity": "CRITICAL",
+          "note": "CO certificate shows China; invoice and entry show South Korea."
+        },
+        {
+          "check": "container_number_consistency",
+          "doc": "arrival_notice",
+          "field": "container_number",
+          "severity": "HIGH",
+          "note": "Arrival notice container number has transposed digits."
+        }
+      ]
+    },
+    {
+      "shipment_id": "OOLU-8571",
+      "clean": false,
+      "canonical": {
+        "bl_number": "MGF74275917",
+        "container_number": "OOLU8571111",
+        "seal_number": "SL7743569",
+        "vessel": "ONE HARMONIA",
+        "voyage": "077E",
+        "port_of_loading": "CARTAGENA, CO",
+        "port_of_discharge": "MIAMI, FL, US",
+        "etd": "2026-05-22",
+        "eta": "2026-06-18",
+        "shipper_name": "CAFETERA DEL HUILA S.A.S.",
+        "shipper_address": "Km 4 Via Palermo, Neiva, Huila, CO",
+        "consignee_name": "PORT CITY COFFEE ROASTERS LLC",
+        "consignee_address": "3350 NW 60TH ST, MIAMI, FL 33142",
+        "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+        "goods_description": "Green coffee beans, arabica, not roasted",
+        "hts_code": "0901.11.0025",
+        "duty_rate": 0.0,
+        "country_of_origin": "Colombia",
+        "package_count": 750,
+        "package_type": "CARTONS",
+        "gross_weight_kg": 21273.9,
+        "net_weight_kg": 18721.4,
+        "volume_cbm": 44.87,
+        "invoice_number": "CI-2026-8095",
+        "invoice_total": 471479.32,
+        "currency": "USD",
+        "incoterm": "FOB Cartagena",
+        "line_items": [
+          {
+            "description": "Green coffee beans, arabica, not roasted",
+            "qty": 2002,
+            "unit_price": 155.2,
+            "amount": 310710.4
+          },
+          {
+            "description": "Green coffee beans, arabica, not roasted (spare/accessory units)",
+            "qty": 771,
+            "unit_price": 208.52,
+            "amount": 160768.92
+          }
+        ],
+        "entry_number": "ABI-37183296-4",
+        "declared_value": 471479.32,
+        "importer_of_record": "PORT CITY COFFEE ROASTERS LLC",
+        "manufacturer_name": "CAFETERA DEL HUILA S.A.S.",
+        "manufacturer_address": "Km 4 Via Palermo, Neiva, Huila, CO",
+        "stuffing_location": "Km 4 Via Palermo, Neiva, Huila, CO",
+        "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+        "bond_type": "CONTINUOUS (TYPE 8)",
+        "isf_transaction": "ISF993183547",
+        "firms_code": "F375",
+        "it_number": "V1155640"
+      },
+      "documents": {
+        "bill_of_lading": {
+          "file": "shipments/OOLU-8571/01_bill_of_lading.pdf",
+          "fields": {
+            "bl_number": "MGF74275917",
+            "shipper_name": "CAFETERA DEL HUILA S.A.S.",
+            "shipper_address": "Km 4 Via Palermo, Neiva, Huila, CO",
+            "consignee_name": "PORT CITY COFFEE ROASTERS LLC",
+            "consignee_address": "3350 NW 60TH ST, MIAMI, FL 33142",
+            "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+            "vessel": "ONE HARMONIA",
+            "voyage": "077E",
+            "port_of_loading": "CARTAGENA, CO",
+            "port_of_discharge": "MIAMI, FL, US",
+            "etd": "2026-05-22",
+            "container_number": "OOLU8571111",
+            "seal_number": "SL7743569",
+            "package_count": 750,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 21273.9,
+            "volume_cbm": 44.87,
+            "goods_description": "Green coffee beans, arabica, not roasted"
+          }
+        },
+        "commercial_invoice": {
+          "file": "shipments/OOLU-8571/02_commercial_invoice.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-8095",
+            "shipper_name": "CAFETERA DEL HUILA S.A.S.",
+            "shipper_address": "Km 4 Via Palermo, Neiva, Huila, CO",
+            "consignee_name": "PORT CITY COFFEE ROASTERS LLC",
+            "consignee_address": "3350 NW 60TH ST, MIAMI, FL 33142",
+            "incoterm": "FOB Cartagena",
+            "currency": "USD",
+            "country_of_origin": "Colombia",
+            "hts_code": "0901.11.0025",
+            "goods_description": "Green coffee beans, arabica, not roasted",
+            "invoice_total": 472489.32
+          },
+          "line_items": [
+            {
+              "description": "Green coffee beans, arabica, not roasted",
+              "qty": 2002,
+              "unit_price": 155.2,
+              "amount": 310710.4
+            },
+            {
+              "description": "Green coffee beans, arabica, not roasted (spare/accessory units)",
+              "qty": 771,
+              "unit_price": 208.52,
+              "amount": 160768.92
+            }
+          ]
+        },
+        "packing_list": {
+          "file": "shipments/OOLU-8571/03_packing_list.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-8095",
+            "container_number": "OOLU8571111",
+            "package_count": 750,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 21273.9,
+            "net_weight_kg": 18721.4,
+            "volume_cbm": 44.87,
+            "goods_description": "Green coffee beans, arabica, not roasted"
+          }
+        },
+        "certificate_of_origin": {
+          "file": "shipments/OOLU-8571/04_certificate_of_origin.pdf",
+          "fields": {
+            "shipper_name": "CAFETERA DEL HUILA S.A.S.",
+            "shipper_address": "Km 4 Via Palermo, Neiva, Huila, CO",
+            "consignee_name": "PORT CITY COFFEE ROASTERS LLC",
+            "consignee_address": "3350 NW 60TH ST, MIAMI, FL 33142",
+            "country_of_origin": "Colombia",
+            "goods_description": "Green coffee beans, arabica, not roasted",
+            "invoice_number": "CI-2026-8095",
+            "package_count": 750
+          }
+        },
+        "isf_filing": {
+          "file": "shipments/OOLU-8571/05_isf_filing.pdf",
+          "fields": {
+            "isf_transaction": "ISF993183547",
+            "bl_number": "MGF74275917",
+            "importer_of_record": "PORT CITY COFFEE ROASTERS LLC",
+            "consignee_name": "PORT CITY COFFEE ROASTERS LLC",
+            "shipper_name": "CAFETERA DEL HUILA S.A.S.",
+            "manufacturer_name": "CAFETERA DEL HUILA S.A.S.",
+            "manufacturer_address": "Km 4 Via Palermo, Neiva, Huila, CO",
+            "country_of_origin": "Colombia",
+            "hts_code": "0901.11.0025",
+            "stuffing_location": "Km 4 Via Palermo, Neiva, Huila, CO",
+            "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+            "bond_type": "CONTINUOUS (TYPE 8)"
+          }
+        },
+        "customs_entry": {
+          "file": "shipments/OOLU-8571/06_customs_entry.pdf",
+          "fields": {
+            "entry_number": "ABI-37183296-4",
+            "importer_of_record": "PORT CITY COFFEE TRADERS LLC",
+            "bl_number": "MGF74275917",
+            "hts_code": "0901.11.0025",
+            "goods_description": "Green coffee beans, arabica, not roasted",
+            "country_of_origin": "Colombia",
+            "declared_value": 471479.32,
+            "duty_rate": 0.0,
+            "vessel": "ONE HARMONIA",
+            "port_of_discharge": "MIAMI, FL, US",
+            "eta": "2026-06-18"
+          }
+        },
+        "arrival_notice": {
+          "file": "shipments/OOLU-8571/07_arrival_notice.pdf",
+          "fields": {
+            "bl_number": "MGF74275917",
+            "container_number": "OOLU8571111",
+            "seal_number": "SL7743569",
+            "vessel": "ONE HARMONIA",
+            "voyage": "077E",
+            "eta": "2026-06-18",
+            "port_of_discharge": "MIAMI, FL, US",
+            "consignee_name": "PORT CITY COFFEE ROASTERS LLC",
+            "package_count": 750,
+            "gross_weight_kg": 21273.9,
+            "firms_code": "F375",
+            "it_number": "V1155640"
+          }
+        },
+        "delivery_order": {
+          "file": "shipments/OOLU-8571/08_delivery_order.pdf",
+          "fields": {
+            "bl_number": "MGF74275917",
+            "container_number": "OOLU8571111",
+            "consignee_name": "PORT CITY COFFEE ROASTERS LLC",
+            "consignee_address": "3350 NW 60TH ST, MIAMI, FL 33142",
+            "firms_code": "F375",
+            "it_number": "V1155640",
+            "package_count": 750
+          }
+        }
+      },
+      "injected_discrepancies": [
+        {
+          "check": "consignee_consistency",
+          "doc": "customs_entry",
+          "field": "importer_of_record",
+          "severity": "HIGH",
+          "note": "Entry importer of record does not match B/L consignee."
+        },
+        {
+          "check": "invoice_math",
+          "doc": "commercial_invoice",
+          "field": "invoice_total",
+          "severity": "MEDIUM",
+          "note": "Invoice stated total exceeds the sum of its line items."
+        }
+      ]
+    },
+    {
+      "shipment_id": "HLXU-2347",
+      "clean": false,
+      "canonical": {
+        "bl_number": "MGF68281295",
+        "container_number": "HLXU2347177",
+        "seal_number": "SL1564049",
+        "vessel": "COSCO PACIFIC DAWN",
+        "voyage": "052W",
+        "port_of_loading": "NINGBO, CN",
+        "port_of_discharge": "MIAMI, FL, US",
+        "etd": "2026-05-26",
+        "eta": "2026-06-17",
+        "shipper_name": "NINGBO BRIGHTPLAY TOYS CO LTD",
+        "shipper_address": "No. 55 Cixi East Rd, Ningbo, Zhejiang, CN",
+        "consignee_name": "ATLANTIC TOY & NOVELTY CORP",
+        "consignee_address": "9600 NW 25TH ST, DORAL, FL 33172",
+        "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+        "goods_description": "Plastic construction toy sets",
+        "hts_code": "9503.00.0073",
+        "duty_rate": 0.0,
+        "country_of_origin": "China",
+        "package_count": 1075,
+        "package_type": "CARTONS",
+        "gross_weight_kg": 10170.9,
+        "net_weight_kg": 8563.7,
+        "volume_cbm": 51.25,
+        "invoice_number": "CI-2026-5752",
+        "invoice_total": 98025.14,
+        "currency": "USD",
+        "incoterm": "FOB Ningbo",
+        "line_items": [
+          {
+            "description": "Plastic construction toy sets",
+            "qty": 1956,
+            "unit_price": 35.94,
+            "amount": 70298.64
+          },
+          {
+            "description": "Plastic construction toy sets (spare/accessory units)",
+            "qty": 575,
+            "unit_price": 48.22,
+            "amount": 27726.5
+          }
+        ],
+        "entry_number": "ABI-52500997-7",
+        "declared_value": 98025.14,
+        "importer_of_record": "ATLANTIC TOY & NOVELTY CORP",
+        "manufacturer_name": "NINGBO BRIGHTPLAY TOYS CO LTD",
+        "manufacturer_address": "No. 55 Cixi East Rd, Ningbo, Zhejiang, CN",
+        "stuffing_location": "No. 55 Cixi East Rd, Ningbo, Zhejiang, CN",
+        "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+        "bond_type": "CONTINUOUS (TYPE 8)",
+        "isf_transaction": "ISF971772377",
+        "firms_code": "F200",
+        "it_number": "V8355987"
+      },
+      "documents": {
+        "bill_of_lading": {
+          "file": "shipments/HLXU-2347/01_bill_of_lading.pdf",
+          "fields": {
+            "bl_number": "MGF68281295",
+            "shipper_name": "NINGBO BRIGHTPLAY TOYS CO LTD",
+            "shipper_address": "No. 55 Cixi East Rd, Ningbo, Zhejiang, CN",
+            "consignee_name": "ATLANTIC TOY & NOVELTY CORP",
+            "consignee_address": "9600 NW 25TH ST, DORAL, FL 33172",
+            "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+            "vessel": "COSCO PACIFIC DAWN",
+            "voyage": "052W",
+            "port_of_loading": "NINGBO, CN",
+            "port_of_discharge": "MIAMI, FL, US",
+            "etd": "2026-05-26",
+            "container_number": "HLXU2347177",
+            "seal_number": "SL1564049",
+            "package_count": 1075,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 10170.9,
+            "volume_cbm": 51.25,
+            "goods_description": "Plastic construction toy sets"
+          }
+        },
+        "commercial_invoice": {
+          "file": "shipments/HLXU-2347/02_commercial_invoice.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-5752",
+            "shipper_name": "NINGBO BRIGHTPLAY TOYS CO LTD",
+            "shipper_address": "No. 55 Cixi East Rd, Ningbo, Zhejiang, CN",
+            "consignee_name": "ATLANTIC TOY & NOVELTY CORP",
+            "consignee_address": "9600 NW 25TH ST, DORAL, FL 33172",
+            "incoterm": "FOB Ningbo",
+            "currency": "USD",
+            "country_of_origin": "China",
+            "hts_code": "9503.00.0073",
+            "goods_description": "Plastic construction toy sets",
+            "invoice_total": 98025.14
+          },
+          "line_items": [
+            {
+              "description": "Plastic construction toy sets",
+              "qty": 1956,
+              "unit_price": 35.94,
+              "amount": 70298.64
+            },
+            {
+              "description": "Plastic construction toy sets (spare/accessory units)",
+              "qty": 575,
+              "unit_price": 48.22,
+              "amount": 27726.5
+            }
+          ]
+        },
+        "packing_list": {
+          "file": "shipments/HLXU-2347/03_packing_list.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-5752",
+            "container_number": "HLXU2347177",
+            "package_count": 1039,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 10170.9,
+            "net_weight_kg": 8563.7,
+            "volume_cbm": 51.25,
+            "goods_description": "Plastic construction toy sets"
+          }
+        },
+        "certificate_of_origin": {
+          "file": "shipments/HLXU-2347/04_certificate_of_origin.pdf",
+          "fields": {
+            "shipper_name": "NINGBO BRIGHTPLAY TOYS CO LTD",
+            "shipper_address": "No. 55 Cixi East Rd, Ningbo, Zhejiang, CN",
+            "consignee_name": "ATLANTIC TOY & NOVELTY CORP",
+            "consignee_address": "9600 NW 25TH ST, DORAL, FL 33172",
+            "country_of_origin": "China",
+            "goods_description": "Plastic construction toy sets",
+            "invoice_number": "CI-2026-5752",
+            "package_count": 1075
+          }
+        },
+        "isf_filing": {
+          "file": "shipments/HLXU-2347/05_isf_filing.pdf",
+          "fields": {
+            "isf_transaction": "ISF971772377",
+            "bl_number": "MGF68281295",
+            "importer_of_record": "ATLANTIC TOY & NOVELTY CORP",
+            "consignee_name": "ATLANTIC TOY & NOVELTY CORP",
+            "shipper_name": "NINGBO BRIGHTPLAY TOYS CO LTD",
+            "manufacturer_name": "NINGBO BRIGHTPLAY TOYS CO LTD",
+            "manufacturer_address": "No. 55 Cixi East Rd, Ningbo, Zhejiang, CN",
+            "country_of_origin": "China",
+            "hts_code": "9503.00.0073",
+            "stuffing_location": "No. 55 Cixi East Rd, Ningbo, Zhejiang, CN",
+            "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+            "bond_type": "CONTINUOUS (TYPE 8)"
+          }
+        },
+        "customs_entry": {
+          "file": "shipments/HLXU-2347/06_customs_entry.pdf",
+          "fields": {
+            "entry_number": "ABI-52500997-7",
+            "importer_of_record": "ATLANTIC TOY & NOVELTY CORP",
+            "bl_number": "MGF68281295",
+            "hts_code": "9503.00.0073",
+            "goods_description": "Plastic construction toy sets",
+            "country_of_origin": "China",
+            "declared_value": 98025.14,
+            "duty_rate": 0.0,
+            "vessel": "COSCO PACIFIC DAWN",
+            "port_of_discharge": "MIAMI, FL, US",
+            "eta": "2026-06-17"
+          }
+        },
+        "arrival_notice": {
+          "file": "shipments/HLXU-2347/07_arrival_notice.pdf",
+          "fields": {
+            "bl_number": "MGF68281295",
+            "container_number": "HLXU2347177",
+            "seal_number": "SL5640499",
+            "vessel": "COSCO PACIFIC DAWN",
+            "voyage": "052W",
+            "eta": "2026-06-17",
+            "port_of_discharge": "MIAMI, FL, US",
+            "consignee_name": "ATLANTIC TOY & NOVELTY CORP",
+            "package_count": 1075,
+            "gross_weight_kg": 10170.9,
+            "firms_code": "F200",
+            "it_number": "V8355987"
+          }
+        },
+        "delivery_order": {
+          "file": "shipments/HLXU-2347/08_delivery_order.pdf",
+          "fields": {
+            "bl_number": "MGF68281295",
+            "container_number": "HLXU2347177",
+            "consignee_name": "ATLANTIC TOY & NOVELTY CORP",
+            "consignee_address": "9600 NW 25TH ST, DORAL, FL 33172",
+            "firms_code": "F200",
+            "it_number": "V8355987",
+            "package_count": 1075
+          }
+        }
+      },
+      "injected_discrepancies": [
+        {
+          "check": "package_count_consistency",
+          "doc": "packing_list",
+          "field": "package_count",
+          "severity": "MEDIUM",
+          "note": "Packing list carton count short of B/L count."
+        },
+        {
+          "check": "seal_number_consistency",
+          "doc": "arrival_notice",
+          "field": "seal_number",
+          "severity": "LOW",
+          "note": "Arrival notice seal number differs from B/L seal."
+        }
+      ]
+    },
+    {
+      "shipment_id": "TGHU-7401",
+      "clean": false,
+      "canonical": {
+        "bl_number": "MGF65205206",
+        "container_number": "TGHU7401980",
+        "seal_number": "SL3455491",
+        "vessel": "BREMEN EXPRESS II",
+        "voyage": "2611",
+        "port_of_loading": "GENOA, IT",
+        "port_of_discharge": "MIAMI, FL, US",
+        "etd": "2026-03-05",
+        "eta": "2026-04-08",
+        "shipper_name": "POMPE ADRIATICA S.R.L.",
+        "shipper_address": "Via dell'Industria 22, Ancona, IT",
+        "consignee_name": "FLORIDA INDUSTRIAL PUMPS INC",
+        "consignee_address": "5501 ANGLERS AVE, FORT LAUDERDALE, FL 33312",
+        "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+        "goods_description": "Centrifugal water pumps, 5-15 kW",
+        "hts_code": "8413.70.2004",
+        "duty_rate": 0.0,
+        "country_of_origin": "Italy",
+        "package_count": 1140,
+        "package_type": "CARTONS",
+        "gross_weight_kg": 12280.9,
+        "net_weight_kg": 10157.2,
+        "volume_cbm": 30.79,
+        "invoice_number": "CI-2026-8362",
+        "invoice_total": 85387.41,
+        "currency": "USD",
+        "incoterm": "FOB Genoa",
+        "line_items": [
+          {
+            "description": "Centrifugal water pumps, 5-15 kW",
+            "qty": 829,
+            "unit_price": 59.54,
+            "amount": 49358.66
+          },
+          {
+            "description": "Centrifugal water pumps, 5-15 kW (spare/accessory units)",
+            "qty": 475,
+            "unit_price": 75.85,
+            "amount": 36028.75
+          }
+        ],
+        "entry_number": "ABI-11883416-1",
+        "declared_value": 85387.41,
+        "importer_of_record": "FLORIDA INDUSTRIAL PUMPS INC",
+        "manufacturer_name": "POMPE ADRIATICA S.R.L.",
+        "manufacturer_address": "Via dell'Industria 22, Ancona, IT",
+        "stuffing_location": "Via dell'Industria 22, Ancona, IT",
+        "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+        "bond_type": "CONTINUOUS (TYPE 8)",
+        "isf_transaction": "ISF100229748",
+        "firms_code": "F562",
+        "it_number": "V2393608"
+      },
+      "documents": {
+        "bill_of_lading": {
+          "file": "shipments/TGHU-7401/01_bill_of_lading.pdf",
+          "fields": {
+            "bl_number": "MGF65205206",
+            "shipper_name": "POMPE ADRIATICA S.R.L.",
+            "shipper_address": "Via dell'Industria 22, Ancona, IT",
+            "consignee_name": "FLORIDA INDUSTRIAL PUMPS INC",
+            "consignee_address": "5501 ANGLERS AVE, FORT LAUDERDALE, FL 33312",
+            "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+            "vessel": "BREMEN EXPRESS II",
+            "voyage": "2611",
+            "port_of_loading": "GENOA, IT",
+            "port_of_discharge": "MIAMI, FL, US",
+            "etd": "2026-03-05",
+            "container_number": "TGHU7401980",
+            "seal_number": "SL3455491",
+            "package_count": 1140,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 12280.9,
+            "volume_cbm": 30.79,
+            "goods_description": "Centrifugal water pumps, 5-15 kW"
+          }
+        },
+        "commercial_invoice": {
+          "file": "shipments/TGHU-7401/02_commercial_invoice.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-8362",
+            "shipper_name": "POMPE ADRIATICA S.R.L.",
+            "shipper_address": "Via dell'Industria 22, Ancona, IT",
+            "consignee_name": "FLORIDA INDUSTRIAL PUMPS INC",
+            "consignee_address": "5501 ANGLERS AVE, FORT LAUDERDALE, FL 33312",
+            "incoterm": "FOB Genoa",
+            "currency": "USD",
+            "country_of_origin": "Italy",
+            "hts_code": "8413.70.2004",
+            "goods_description": "Centrifugal water pumps, 5-15 kW",
+            "invoice_total": 85387.41
+          },
+          "line_items": [
+            {
+              "description": "Centrifugal water pumps, 5-15 kW",
+              "qty": 829,
+              "unit_price": 59.54,
+              "amount": 49358.66
+            },
+            {
+              "description": "Centrifugal water pumps, 5-15 kW (spare/accessory units)",
+              "qty": 475,
+              "unit_price": 75.85,
+              "amount": 36028.75
+            }
+          ]
+        },
+        "packing_list": {
+          "file": "shipments/TGHU-7401/03_packing_list.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-8362",
+            "container_number": "TGHU7401980",
+            "package_count": 1140,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 12280.9,
+            "net_weight_kg": 13017.8,
+            "volume_cbm": 30.79,
+            "goods_description": "Centrifugal water pumps, 5-15 kW"
+          }
+        },
+        "certificate_of_origin": {
+          "file": "shipments/TGHU-7401/04_certificate_of_origin.pdf",
+          "fields": {
+            "shipper_name": "POMPE ADRIATICA S.R.L.",
+            "shipper_address": "Via dell'Industria 22, Ancona, IT",
+            "consignee_name": "FLORIDA INDUSTRIAL PUMPS INC",
+            "consignee_address": "5501 ANGLERS AVE, FORT LAUDERDALE, FL 33312",
+            "country_of_origin": "Italy",
+            "goods_description": "Centrifugal water pumps, 5-15 kW",
+            "invoice_number": "CI-2026-8362",
+            "package_count": 1140
+          }
+        },
+        "isf_filing": {
+          "file": "shipments/TGHU-7401/05_isf_filing.pdf",
+          "fields": {
+            "isf_transaction": "ISF100229748",
+            "bl_number": "MGF65205206",
+            "importer_of_record": "FLORIDA INDUSTRIAL PUMPS INC",
+            "consignee_name": "FLORIDA INDUSTRIAL PUMPS INC",
+            "shipper_name": "POMPE ADRIATICA S.R.L.",
+            "manufacturer_name": "POMPE ADRIATICA S.R.L.",
+            "manufacturer_address": "Via dell'Industria 22, Ancona, IT",
+            "country_of_origin": "Italy",
+            "hts_code": "8413.70.2004",
+            "stuffing_location": "Via dell'Industria 22, Ancona, IT",
+            "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+            "bond_type": "CONTINUOUS (TYPE 8)"
+          }
+        },
+        "customs_entry": {
+          "file": "shipments/TGHU-7401/06_customs_entry.pdf",
+          "fields": {
+            "entry_number": "ABI-11883416-1",
+            "importer_of_record": "FLORIDA INDUSTRIAL PUMPS INC",
+            "bl_number": "MGF65205206",
+            "hts_code": "8413.70.2004",
+            "goods_description": "Centrifugal water pumps, 5-15 kW",
+            "country_of_origin": "Italy",
+            "declared_value": 85387.41,
+            "duty_rate": 0.0,
+            "vessel": "BREMEN EXPRESS II",
+            "port_of_discharge": "MIAMI, FL, US",
+            "eta": "2026-04-08"
+          }
+        },
+        "arrival_notice": {
+          "file": "shipments/TGHU-7401/07_arrival_notice.pdf",
+          "fields": {
+            "bl_number": "MGF65205206",
+            "container_number": "TGHU7401980",
+            "seal_number": "SL3455491",
+            "vessel": "BREMEN EXPRESS",
+            "voyage": "2611",
+            "eta": "2026-04-08",
+            "port_of_discharge": "MIAMI, FL, US",
+            "consignee_name": "FLORIDA INDUSTRIAL PUMPS INC",
+            "package_count": 1140,
+            "gross_weight_kg": 12280.9,
+            "firms_code": "F562",
+            "it_number": "V2393608"
+          }
+        },
+        "delivery_order": {
+          "file": "shipments/TGHU-7401/08_delivery_order.pdf",
+          "fields": {
+            "bl_number": "MGF65205206",
+            "container_number": "TGHU7401980",
+            "consignee_name": "FLORIDA INDUSTRIAL PUMPS INC",
+            "consignee_address": "5501 ANGLERS AVE, FORT LAUDERDALE, FL 33312",
+            "firms_code": "F562",
+            "it_number": "V2393608",
+            "package_count": 1140
+          }
+        }
+      },
+      "injected_discrepancies": [
+        {
+          "check": "net_vs_gross_weight",
+          "doc": "packing_list",
+          "field": "net_weight_kg",
+          "severity": "MEDIUM",
+          "note": "Packing list net weight exceeds its own gross weight."
+        },
+        {
+          "check": "vessel_consistency",
+          "doc": "arrival_notice",
+          "field": "vessel",
+          "severity": "LOW",
+          "note": "Arrival notice vessel name does not match B/L vessel."
+        }
+      ]
+    },
+    {
+      "shipment_id": "APZU-8397",
+      "clean": true,
+      "canonical": {
+        "bl_number": "MGF52069571",
+        "container_number": "APZU8397716",
+        "seal_number": "SL9254204",
+        "vessel": "OOCL VALENCIA",
+        "voyage": "089W",
+        "port_of_loading": "PORT KLANG, MY",
+        "port_of_discharge": "MIAMI, FL, US",
+        "etd": "2026-03-06",
+        "eta": "2026-04-02",
+        "shipper_name": "SELANGOR MEDIGLOVE SDN BHD",
+        "shipper_address": "Jalan Perusahaan 6, Klang, Selangor, MY",
+        "consignee_name": "CORAL MEDICAL SUPPLY GROUP",
+        "consignee_address": "8200 NW 52ND TER, DORAL, FL 33166",
+        "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+        "goods_description": "Disposable nitrile examination gloves",
+        "hts_code": "4015.12.1000",
+        "duty_rate": 0.03,
+        "country_of_origin": "Malaysia",
+        "package_count": 1421,
+        "package_type": "CARTONS",
+        "gross_weight_kg": 17107.8,
+        "net_weight_kg": 15828.1,
+        "volume_cbm": 50.09,
+        "invoice_number": "CI-2026-3209",
+        "invoice_total": 223358.04,
+        "currency": "USD",
+        "incoterm": "FOB Port Klang",
+        "line_items": [
+          {
+            "description": "Disposable nitrile examination gloves",
+            "qty": 1095,
+            "unit_price": 175.35,
+            "amount": 192008.25
+          },
+          {
+            "description": "Disposable nitrile examination gloves (spare/accessory units)",
+            "qty": 163,
+            "unit_price": 192.33,
+            "amount": 31349.79
+          }
+        ],
+        "entry_number": "ABI-83256520-3",
+        "declared_value": 223358.04,
+        "importer_of_record": "CORAL MEDICAL SUPPLY GROUP",
+        "manufacturer_name": "SELANGOR MEDIGLOVE SDN BHD",
+        "manufacturer_address": "Jalan Perusahaan 6, Klang, Selangor, MY",
+        "stuffing_location": "Jalan Perusahaan 6, Klang, Selangor, MY",
+        "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+        "bond_type": "CONTINUOUS (TYPE 8)",
+        "isf_transaction": "ISF607862197",
+        "firms_code": "F702",
+        "it_number": "V3201443"
+      },
+      "documents": {
+        "bill_of_lading": {
+          "file": "shipments/APZU-8397/01_bill_of_lading.pdf",
+          "fields": {
+            "bl_number": "MGF52069571",
+            "shipper_name": "SELANGOR MEDIGLOVE SDN BHD",
+            "shipper_address": "Jalan Perusahaan 6, Klang, Selangor, MY",
+            "consignee_name": "CORAL MEDICAL SUPPLY GROUP",
+            "consignee_address": "8200 NW 52ND TER, DORAL, FL 33166",
+            "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+            "vessel": "OOCL VALENCIA",
+            "voyage": "089W",
+            "port_of_loading": "PORT KLANG, MY",
+            "port_of_discharge": "MIAMI, FL, US",
+            "etd": "2026-03-06",
+            "container_number": "APZU8397716",
+            "seal_number": "SL9254204",
+            "package_count": 1421,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 17107.8,
+            "volume_cbm": 50.09,
+            "goods_description": "Disposable nitrile examination gloves"
+          }
+        },
+        "commercial_invoice": {
+          "file": "shipments/APZU-8397/02_commercial_invoice.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-3209",
+            "shipper_name": "SELANGOR MEDIGLOVE SDN BHD",
+            "shipper_address": "Jalan Perusahaan 6, Klang, Selangor, MY",
+            "consignee_name": "CORAL MEDICAL SUPPLY GROUP",
+            "consignee_address": "8200 NW 52ND TER, DORAL, FL 33166",
+            "incoterm": "FOB Port Klang",
+            "currency": "USD",
+            "country_of_origin": "Malaysia",
+            "hts_code": "4015.12.1000",
+            "goods_description": "Disposable nitrile examination gloves",
+            "invoice_total": 223358.04
+          },
+          "line_items": [
+            {
+              "description": "Disposable nitrile examination gloves",
+              "qty": 1095,
+              "unit_price": 175.35,
+              "amount": 192008.25
+            },
+            {
+              "description": "Disposable nitrile examination gloves (spare/accessory units)",
+              "qty": 163,
+              "unit_price": 192.33,
+              "amount": 31349.79
+            }
+          ]
+        },
+        "packing_list": {
+          "file": "shipments/APZU-8397/03_packing_list.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-3209",
+            "container_number": "APZU8397716",
+            "package_count": 1421,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 17107.8,
+            "net_weight_kg": 15828.1,
+            "volume_cbm": 50.09,
+            "goods_description": "Disposable nitrile examination gloves"
+          }
+        },
+        "certificate_of_origin": {
+          "file": "shipments/APZU-8397/04_certificate_of_origin.pdf",
+          "fields": {
+            "shipper_name": "SELANGOR MEDIGLOVE SDN BHD",
+            "shipper_address": "Jalan Perusahaan 6, Klang, Selangor, MY",
+            "consignee_name": "CORAL MEDICAL SUPPLY GROUP",
+            "consignee_address": "8200 NW 52ND TER, DORAL, FL 33166",
+            "country_of_origin": "Malaysia",
+            "goods_description": "Disposable nitrile examination gloves",
+            "invoice_number": "CI-2026-3209",
+            "package_count": 1421
+          }
+        },
+        "isf_filing": {
+          "file": "shipments/APZU-8397/05_isf_filing.pdf",
+          "fields": {
+            "isf_transaction": "ISF607862197",
+            "bl_number": "MGF52069571",
+            "importer_of_record": "CORAL MEDICAL SUPPLY GROUP",
+            "consignee_name": "CORAL MEDICAL SUPPLY GROUP",
+            "shipper_name": "SELANGOR MEDIGLOVE SDN BHD",
+            "manufacturer_name": "SELANGOR MEDIGLOVE SDN BHD",
+            "manufacturer_address": "Jalan Perusahaan 6, Klang, Selangor, MY",
+            "country_of_origin": "Malaysia",
+            "hts_code": "4015.12.1000",
+            "stuffing_location": "Jalan Perusahaan 6, Klang, Selangor, MY",
+            "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+            "bond_type": "CONTINUOUS (TYPE 8)"
+          }
+        },
+        "customs_entry": {
+          "file": "shipments/APZU-8397/06_customs_entry.pdf",
+          "fields": {
+            "entry_number": "ABI-83256520-3",
+            "importer_of_record": "CORAL MEDICAL SUPPLY GROUP",
+            "bl_number": "MGF52069571",
+            "hts_code": "4015.12.1000",
+            "goods_description": "Disposable nitrile examination gloves",
+            "country_of_origin": "Malaysia",
+            "declared_value": 223358.04,
+            "duty_rate": 0.03,
+            "vessel": "OOCL VALENCIA",
+            "port_of_discharge": "MIAMI, FL, US",
+            "eta": "2026-04-02"
+          }
+        },
+        "arrival_notice": {
+          "file": "shipments/APZU-8397/07_arrival_notice.pdf",
+          "fields": {
+            "bl_number": "MGF52069571",
+            "container_number": "APZU8397716",
+            "seal_number": "SL9254204",
+            "vessel": "OOCL VALENCIA",
+            "voyage": "089W",
+            "eta": "2026-04-02",
+            "port_of_discharge": "MIAMI, FL, US",
+            "consignee_name": "CORAL MEDICAL SUPPLY GROUP",
+            "package_count": 1421,
+            "gross_weight_kg": 17107.8,
+            "firms_code": "F702",
+            "it_number": "V3201443"
+          }
+        },
+        "delivery_order": {
+          "file": "shipments/APZU-8397/08_delivery_order.pdf",
+          "fields": {
+            "bl_number": "MGF52069571",
+            "container_number": "APZU8397716",
+            "consignee_name": "CORAL MEDICAL SUPPLY GROUP",
+            "consignee_address": "8200 NW 52ND TER, DORAL, FL 33166",
+            "firms_code": "F702",
+            "it_number": "V3201443",
+            "package_count": 1421
+          }
+        }
+      },
+      "injected_discrepancies": []
+    },
+    {
+      "shipment_id": "FCIU-8271",
+      "clean": true,
+      "canonical": {
+        "bl_number": "MGF62399581",
+        "container_number": "FCIU8271919",
+        "seal_number": "SL3492025",
+        "vessel": "ZIM CARIBBEAN STAR",
+        "voyage": "34S",
+        "port_of_loading": "CHENNAI, IN",
+        "port_of_discharge": "MIAMI, FL, US",
+        "etd": "2026-03-18",
+        "eta": "2026-04-15",
+        "shipper_name": "CHENNAI STEELWARE EXPORTS PVT LTD",
+        "shipper_address": "SIPCOT Industrial Park, Sriperumbudur, IN",
+        "consignee_name": "SOUTHEAST KITCHEN IMPORTS LLC",
+        "consignee_address": "1150 NW 72ND AVE, MIAMI, FL 33126",
+        "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+        "goods_description": "Stainless steel cookware sets",
+        "hts_code": "7323.93.0045",
+        "duty_rate": 0.02,
+        "country_of_origin": "India",
+        "package_count": 1320,
+        "package_type": "CARTONS",
+        "gross_weight_kg": 15633.4,
+        "net_weight_kg": 14427.4,
+        "volume_cbm": 55.61,
+        "invoice_number": "CI-2026-9520",
+        "invoice_total": 458145.83,
+        "currency": "USD",
+        "incoterm": "FOB Chennai",
+        "line_items": [
+          {
+            "description": "Stainless steel cookware sets",
+            "qty": 2147,
+            "unit_price": 193.15,
+            "amount": 414693.05
+          },
+          {
+            "description": "Stainless steel cookware sets (spare/accessory units)",
+            "qty": 337,
+            "unit_price": 128.94,
+            "amount": 43452.78
+          }
+        ],
+        "entry_number": "ABI-36400239-6",
+        "declared_value": 458145.83,
+        "importer_of_record": "SOUTHEAST KITCHEN IMPORTS LLC",
+        "manufacturer_name": "CHENNAI STEELWARE EXPORTS PVT LTD",
+        "manufacturer_address": "SIPCOT Industrial Park, Sriperumbudur, IN",
+        "stuffing_location": "SIPCOT Industrial Park, Sriperumbudur, IN",
+        "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+        "bond_type": "CONTINUOUS (TYPE 8)",
+        "isf_transaction": "ISF115173982",
+        "firms_code": "F208",
+        "it_number": "V7532175"
+      },
+      "documents": {
+        "bill_of_lading": {
+          "file": "shipments/FCIU-8271/01_bill_of_lading.pdf",
+          "fields": {
+            "bl_number": "MGF62399581",
+            "shipper_name": "CHENNAI STEELWARE EXPORTS PVT LTD",
+            "shipper_address": "SIPCOT Industrial Park, Sriperumbudur, IN",
+            "consignee_name": "SOUTHEAST KITCHEN IMPORTS LLC",
+            "consignee_address": "1150 NW 72ND AVE, MIAMI, FL 33126",
+            "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+            "vessel": "ZIM CARIBBEAN STAR",
+            "voyage": "34S",
+            "port_of_loading": "CHENNAI, IN",
+            "port_of_discharge": "MIAMI, FL, US",
+            "etd": "2026-03-18",
+            "container_number": "FCIU8271919",
+            "seal_number": "SL3492025",
+            "package_count": 1320,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 15633.4,
+            "volume_cbm": 55.61,
+            "goods_description": "Stainless steel cookware sets"
+          }
+        },
+        "commercial_invoice": {
+          "file": "shipments/FCIU-8271/02_commercial_invoice.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-9520",
+            "shipper_name": "CHENNAI STEELWARE EXPORTS PVT LTD",
+            "shipper_address": "SIPCOT Industrial Park, Sriperumbudur, IN",
+            "consignee_name": "SOUTHEAST KITCHEN IMPORTS LLC",
+            "consignee_address": "1150 NW 72ND AVE, MIAMI, FL 33126",
+            "incoterm": "FOB Chennai",
+            "currency": "USD",
+            "country_of_origin": "India",
+            "hts_code": "7323.93.0045",
+            "goods_description": "Stainless steel cookware sets",
+            "invoice_total": 458145.83
+          },
+          "line_items": [
+            {
+              "description": "Stainless steel cookware sets",
+              "qty": 2147,
+              "unit_price": 193.15,
+              "amount": 414693.05
+            },
+            {
+              "description": "Stainless steel cookware sets (spare/accessory units)",
+              "qty": 337,
+              "unit_price": 128.94,
+              "amount": 43452.78
+            }
+          ]
+        },
+        "packing_list": {
+          "file": "shipments/FCIU-8271/03_packing_list.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-9520",
+            "container_number": "FCIU8271919",
+            "package_count": 1320,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 15633.4,
+            "net_weight_kg": 14427.4,
+            "volume_cbm": 55.61,
+            "goods_description": "Stainless steel cookware sets"
+          }
+        },
+        "certificate_of_origin": {
+          "file": "shipments/FCIU-8271/04_certificate_of_origin.pdf",
+          "fields": {
+            "shipper_name": "CHENNAI STEELWARE EXPORTS PVT LTD",
+            "shipper_address": "SIPCOT Industrial Park, Sriperumbudur, IN",
+            "consignee_name": "SOUTHEAST KITCHEN IMPORTS LLC",
+            "consignee_address": "1150 NW 72ND AVE, MIAMI, FL 33126",
+            "country_of_origin": "India",
+            "goods_description": "Stainless steel cookware sets",
+            "invoice_number": "CI-2026-9520",
+            "package_count": 1320
+          }
+        },
+        "isf_filing": {
+          "file": "shipments/FCIU-8271/05_isf_filing.pdf",
+          "fields": {
+            "isf_transaction": "ISF115173982",
+            "bl_number": "MGF62399581",
+            "importer_of_record": "SOUTHEAST KITCHEN IMPORTS LLC",
+            "consignee_name": "SOUTHEAST KITCHEN IMPORTS LLC",
+            "shipper_name": "CHENNAI STEELWARE EXPORTS PVT LTD",
+            "manufacturer_name": "CHENNAI STEELWARE EXPORTS PVT LTD",
+            "manufacturer_address": "SIPCOT Industrial Park, Sriperumbudur, IN",
+            "country_of_origin": "India",
+            "hts_code": "7323.93.0045",
+            "stuffing_location": "SIPCOT Industrial Park, Sriperumbudur, IN",
+            "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+            "bond_type": "CONTINUOUS (TYPE 8)"
+          }
+        },
+        "customs_entry": {
+          "file": "shipments/FCIU-8271/06_customs_entry.pdf",
+          "fields": {
+            "entry_number": "ABI-36400239-6",
+            "importer_of_record": "SOUTHEAST KITCHEN IMPORTS LLC",
+            "bl_number": "MGF62399581",
+            "hts_code": "7323.93.0045",
+            "goods_description": "Stainless steel cookware sets",
+            "country_of_origin": "India",
+            "declared_value": 458145.83,
+            "duty_rate": 0.02,
+            "vessel": "ZIM CARIBBEAN STAR",
+            "port_of_discharge": "MIAMI, FL, US",
+            "eta": "2026-04-15"
+          }
+        },
+        "arrival_notice": {
+          "file": "shipments/FCIU-8271/07_arrival_notice.pdf",
+          "fields": {
+            "bl_number": "MGF62399581",
+            "container_number": "FCIU8271919",
+            "seal_number": "SL3492025",
+            "vessel": "ZIM CARIBBEAN STAR",
+            "voyage": "34S",
+            "eta": "2026-04-15",
+            "port_of_discharge": "MIAMI, FL, US",
+            "consignee_name": "SOUTHEAST KITCHEN IMPORTS LLC",
+            "package_count": 1320,
+            "gross_weight_kg": 15633.4,
+            "firms_code": "F208",
+            "it_number": "V7532175"
+          }
+        },
+        "delivery_order": {
+          "file": "shipments/FCIU-8271/08_delivery_order.pdf",
+          "fields": {
+            "bl_number": "MGF62399581",
+            "container_number": "FCIU8271919",
+            "consignee_name": "SOUTHEAST KITCHEN IMPORTS LLC",
+            "consignee_address": "1150 NW 72ND AVE, MIAMI, FL 33126",
+            "firms_code": "F208",
+            "it_number": "V7532175",
+            "package_count": 1320
+          }
+        }
+      },
+      "injected_discrepancies": []
+    },
+    {
+      "shipment_id": "TRLU-2770",
+      "clean": true,
+      "canonical": {
+        "bl_number": "MGF26290387",
+        "container_number": "TRLU2770008",
+        "seal_number": "SL9347833",
+        "vessel": "HYUNDAI COURAGE",
+        "voyage": "119E",
+        "port_of_loading": "LAEM CHABANG, TH",
+        "port_of_discharge": "MIAMI, FL, US",
+        "etd": "2026-03-16",
+        "eta": "2026-04-12",
+        "shipper_name": "RAYONG SOLARTECH CO LTD",
+        "shipper_address": "Hemaraj Eastern Industrial Estate, Rayong, TH",
+        "consignee_name": "SOLARIS ENERGY DISTRIBUTORS",
+        "consignee_address": "2901 SW 149TH AVE, MIRAMAR, FL 33027",
+        "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+        "goods_description": "Monocrystalline solar panel modules, 450W",
+        "hts_code": "8541.43.0010",
+        "duty_rate": 0.0,
+        "country_of_origin": "Thailand",
+        "package_count": 791,
+        "package_type": "CARTONS",
+        "gross_weight_kg": 17420.7,
+        "net_weight_kg": 14334.4,
+        "volume_cbm": 42.5,
+        "invoice_number": "CI-2026-8644",
+        "invoice_total": 30994.53,
+        "currency": "USD",
+        "incoterm": "FOB Laem Chabang",
+        "line_items": [
+          {
+            "description": "Monocrystalline solar panel modules, 450W",
+            "qty": 1501,
+            "unit_price": 14.62,
+            "amount": 21944.62
+          },
+          {
+            "description": "Monocrystalline solar panel modules, 450W (spare/accessory units)",
+            "qty": 701,
+            "unit_price": 12.91,
+            "amount": 9049.91
+          }
+        ],
+        "entry_number": "ABI-86721298-9",
+        "declared_value": 30994.53,
+        "importer_of_record": "SOLARIS ENERGY DISTRIBUTORS",
+        "manufacturer_name": "RAYONG SOLARTECH CO LTD",
+        "manufacturer_address": "Hemaraj Eastern Industrial Estate, Rayong, TH",
+        "stuffing_location": "Hemaraj Eastern Industrial Estate, Rayong, TH",
+        "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+        "bond_type": "CONTINUOUS (TYPE 8)",
+        "isf_transaction": "ISF964296256",
+        "firms_code": "F274",
+        "it_number": "V3581855"
+      },
+      "documents": {
+        "bill_of_lading": {
+          "file": "shipments/TRLU-2770/01_bill_of_lading.pdf",
+          "fields": {
+            "bl_number": "MGF26290387",
+            "shipper_name": "RAYONG SOLARTECH CO LTD",
+            "shipper_address": "Hemaraj Eastern Industrial Estate, Rayong, TH",
+            "consignee_name": "SOLARIS ENERGY DISTRIBUTORS",
+            "consignee_address": "2901 SW 149TH AVE, MIRAMAR, FL 33027",
+            "notify_party": "PANAMERICAN CUSTOMS BROKERS INC, 8300 NW 53RD ST STE 350, DORAL, FL 33166",
+            "vessel": "HYUNDAI COURAGE",
+            "voyage": "119E",
+            "port_of_loading": "LAEM CHABANG, TH",
+            "port_of_discharge": "MIAMI, FL, US",
+            "etd": "2026-03-16",
+            "container_number": "TRLU2770008",
+            "seal_number": "SL9347833",
+            "package_count": 791,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 17420.7,
+            "volume_cbm": 42.5,
+            "goods_description": "Monocrystalline solar panel modules, 450W"
+          }
+        },
+        "commercial_invoice": {
+          "file": "shipments/TRLU-2770/02_commercial_invoice.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-8644",
+            "shipper_name": "RAYONG SOLARTECH CO LTD",
+            "shipper_address": "Hemaraj Eastern Industrial Estate, Rayong, TH",
+            "consignee_name": "SOLARIS ENERGY DISTRIBUTORS",
+            "consignee_address": "2901 SW 149TH AVE, MIRAMAR, FL 33027",
+            "incoterm": "FOB Laem Chabang",
+            "currency": "USD",
+            "country_of_origin": "Thailand",
+            "hts_code": "8541.43.0010",
+            "goods_description": "Monocrystalline solar panel modules, 450W",
+            "invoice_total": 30994.53
+          },
+          "line_items": [
+            {
+              "description": "Monocrystalline solar panel modules, 450W",
+              "qty": 1501,
+              "unit_price": 14.62,
+              "amount": 21944.62
+            },
+            {
+              "description": "Monocrystalline solar panel modules, 450W (spare/accessory units)",
+              "qty": 701,
+              "unit_price": 12.91,
+              "amount": 9049.91
+            }
+          ]
+        },
+        "packing_list": {
+          "file": "shipments/TRLU-2770/03_packing_list.pdf",
+          "fields": {
+            "invoice_number": "CI-2026-8644",
+            "container_number": "TRLU2770008",
+            "package_count": 791,
+            "package_type": "CARTONS",
+            "gross_weight_kg": 17420.7,
+            "net_weight_kg": 14334.4,
+            "volume_cbm": 42.5,
+            "goods_description": "Monocrystalline solar panel modules, 450W"
+          }
+        },
+        "certificate_of_origin": {
+          "file": "shipments/TRLU-2770/04_certificate_of_origin.pdf",
+          "fields": {
+            "shipper_name": "RAYONG SOLARTECH CO LTD",
+            "shipper_address": "Hemaraj Eastern Industrial Estate, Rayong, TH",
+            "consignee_name": "SOLARIS ENERGY DISTRIBUTORS",
+            "consignee_address": "2901 SW 149TH AVE, MIRAMAR, FL 33027",
+            "country_of_origin": "Thailand",
+            "goods_description": "Monocrystalline solar panel modules, 450W",
+            "invoice_number": "CI-2026-8644",
+            "package_count": 791
+          }
+        },
+        "isf_filing": {
+          "file": "shipments/TRLU-2770/05_isf_filing.pdf",
+          "fields": {
+            "isf_transaction": "ISF964296256",
+            "bl_number": "MGF26290387",
+            "importer_of_record": "SOLARIS ENERGY DISTRIBUTORS",
+            "consignee_name": "SOLARIS ENERGY DISTRIBUTORS",
+            "shipper_name": "RAYONG SOLARTECH CO LTD",
+            "manufacturer_name": "RAYONG SOLARTECH CO LTD",
+            "manufacturer_address": "Hemaraj Eastern Industrial Estate, Rayong, TH",
+            "country_of_origin": "Thailand",
+            "hts_code": "8541.43.0010",
+            "stuffing_location": "Hemaraj Eastern Industrial Estate, Rayong, TH",
+            "consolidator": "MERIDIAN GLOBAL FORWARDING (USA) LLC",
+            "bond_type": "CONTINUOUS (TYPE 8)"
+          }
+        },
+        "customs_entry": {
+          "file": "shipments/TRLU-2770/06_customs_entry.pdf",
+          "fields": {
+            "entry_number": "ABI-86721298-9",
+            "importer_of_record": "SOLARIS ENERGY DISTRIBUTORS",
+            "bl_number": "MGF26290387",
+            "hts_code": "8541.43.0010",
+            "goods_description": "Monocrystalline solar panel modules, 450W",
+            "country_of_origin": "Thailand",
+            "declared_value": 30994.53,
+            "duty_rate": 0.0,
+            "vessel": "HYUNDAI COURAGE",
+            "port_of_discharge": "MIAMI, FL, US",
+            "eta": "2026-04-12"
+          }
+        },
+        "arrival_notice": {
+          "file": "shipments/TRLU-2770/07_arrival_notice.pdf",
+          "fields": {
+            "bl_number": "MGF26290387",
+            "container_number": "TRLU2770008",
+            "seal_number": "SL9347833",
+            "vessel": "HYUNDAI COURAGE",
+            "voyage": "119E",
+            "eta": "2026-04-12",
+            "port_of_discharge": "MIAMI, FL, US",
+            "consignee_name": "SOLARIS ENERGY DISTRIBUTORS",
+            "package_count": 791,
+            "gross_weight_kg": 17420.7,
+            "firms_code": "F274",
+            "it_number": "V3581855"
+          }
+        },
+        "delivery_order": {
+          "file": "shipments/TRLU-2770/08_delivery_order.pdf",
+          "fields": {
+            "bl_number": "MGF26290387",
+            "container_number": "TRLU2770008",
+            "consignee_name": "SOLARIS ENERGY DISTRIBUTORS",
+            "consignee_address": "2901 SW 149TH AVE, MIRAMAR, FL 33027",
+            "firms_code": "F274",
+            "it_number": "V3581855",
+            "package_count": 791
+          }
+        }
+      },
+      "injected_discrepancies": []
+    }
+  ]
+}
